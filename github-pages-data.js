@@ -57,18 +57,26 @@
         throw new Error('Set the release API URL and backend path in dashboard-config.js.');
       }
 
-      const release = pendingWorkbookVersion
-        ? { tag: pendingWorkbookVersion, readyAt: pendingWorkbookReadyAt }
-        : await getLatestRelease();
-      if (!release) return;
-      if (release.tag === currentWorkbookVersion) {
-        lastError = '';
-        return;
+      const latestRelease = await getLatestRelease();
+      if (latestRelease) {
+        if (latestRelease.tag === currentWorkbookVersion) {
+          pendingWorkbookVersion = '';
+          pendingWorkbookReadyAt = 0;
+          lastError = '';
+          return;
+        }
+        if (latestRelease.tag !== pendingWorkbookVersion) {
+          pendingWorkbookVersion = latestRelease.tag;
+          pendingWorkbookReadyAt = latestRelease.readyAt;
+        }
       }
 
-      pendingWorkbookVersion = release.tag;
-      pendingWorkbookReadyAt = release.readyAt;
-      if (Date.now() < pendingWorkbookReadyAt) {
+      if (!pendingWorkbookVersion) return;
+      const release = {
+        tag: pendingWorkbookVersion,
+        readyAt: pendingWorkbookReadyAt
+      };
+      if (Date.now() < release.readyAt) {
         setLoadingStatus('Waiting for the new release to finish deploying...');
         return;
       }
