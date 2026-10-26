@@ -17,6 +17,11 @@
     }
   }
 
+  function setLoadingStatus(message) {
+    const status = document.querySelector('#charts .nd');
+    if (status) status.textContent = message;
+  }
+
   async function getWorkbookVersion() {
     const response = await fetch(config.workbookUrl, { method: 'HEAD', cache: 'no-store' });
     if (!response.ok) throw new Error('Backend endpoint returned ' + response.status + '.');
@@ -29,15 +34,19 @@
     if (refreshBusy) return;
     refreshBusy = true;
     try {
+      setLoadingStatus('Checking for workbook updates...');
       if (!config || !config.workbookUrl) throw new Error('Set the workbook URL in dashboard-config.js.');
       const version = await getWorkbookVersion();
       if (version === currentWorkbookVersion) {
         lastError = '';
         return;
       }
+      setLoadingStatus('Downloading backend workbook (~45 MB)...');
       const response = await fetch(config.workbookUrl, { cache: 'no-store' });
       if (!response.ok) throw new Error('Could not download Backend.xlsm (' + response.status + ').');
-      await applyWorkbook(await response.blob(), 'Backend.xlsm', false);
+      const workbook = await response.blob();
+      setLoadingStatus('Reading workbook data...');
+      await applyWorkbook(workbook, 'Backend.xlsm', false);
       currentWorkbookVersion = version;
       lastError = '';
       toast('Dashboard updated from GitHub backend');
