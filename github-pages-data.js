@@ -2,7 +2,10 @@
   'use strict';
 
   const config = window.ZONG_DASHBOARD_CONFIG;
+  const RELEASE_CHECK_INTERVAL_MS = 70_000;
   let currentWorkbookVersion = '';
+  let pendingWorkbookVersion = '';
+  let lastReleaseCheck = 0;
   let refreshBusy = false;
   let lastError = '';
 
@@ -22,12 +25,21 @@
     if (status) status.textContent = message;
   }
 
-  async function getWorkbookVersion() {
-    const response = await fetch(config.workbookUrl, { method: 'HEAD', cache: 'no-store' });
-    if (!response.ok) throw new Error('Backend endpoint returned ' + response.status + '.');
-    const version = response.headers.get('ETag') || response.headers.get('Last-Modified') || response.headers.get('Content-Length');
-    if (!version) throw new Error('The backend endpoint did not return a version header.');
-    return version;
+  async function getLatestReleaseTag() {
+    const now = Date.now();
+    if (now - lastReleaseCheck < RELEASE_CHECK_INTERVAL_MS) return '';
+    lastReleaseCheck = now;
+
+    const response = await fetch(config.latestReleaseApiUrl, {
+      headers: { Accept: 'application/vnd.github+json' },
+      cache: 'no-store'
+    });
+    if (!response.ok) throw new Error('GitHub Releases API returned ' + response.status + '.');
+    const release = await response.json();
+    if (typeof release.tag_name !== 'string' || !release.tag_name) {
+      throw new Error('GitHub did not return a latest published release tag.');
+    }
+    return release.tag_name;
   }
 
   window.refreshGitHubWorkbook = async function (applyWorkbook, toast) {
@@ -35,21 +47,28 @@
     refreshBusy = true;
     try {
       setLoadingStatus('Checking for workbook updates...');
-      if (!config || !config.workbookUrl) throw new Error('Set the workbook URL in dashboard-config.js.');
-      const version = await getWorkbookVersion();
-      if (version === currentWorkbookVersion) {
+      if (!config || !config.latestReleaseApiUrl || !config.backendPath) {
+        throw new Error('Set the release API URL and backend path in dashboard-config.js.');
+      }
+
+      const version = pendingWorkbookVersion || await getLatestReleaseTag();
+      if (!version || version === currentWorkbookVersion) {
         lastError = '';
         return;
       }
+      pendingWorkbookVersion = version;
+
+      const workbookUrl = new URL(config.backendPath + encodeURIComponent(version) + '/Backend.xlsm', document.baseURI);
       setLoadingStatus('Downloading backend workbook (~45 MB)...');
-      const response = await fetch(config.workbookUrl, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Could not download Backend.xlsm (' + response.status + ').');
+      const response = await fetch(workbookUrl.href, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Could not download the workbook for release ' + version + ' (' + response.status + ').');
       const workbook = await response.blob();
       setLoadingStatus('Reading workbook data...');
       await applyWorkbook(workbook, 'Backend.xlsm', false);
       currentWorkbookVersion = version;
+      pendingWorkbookVersion = '';
       lastError = '';
-      toast('Dashboard updated from GitHub backend');
+      toast('Dashboard updated from release ' + version);
     } catch (error) {
       reportError(error, toast);
     } finally {
