@@ -29,6 +29,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Download versioned workbook
+        id: backend
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -37,11 +38,11 @@ jobs:
           else
             release_tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
           fi
-          mkdir -p "backends/$release_tag"
-          gh release download "$release_tag" --repo "$GITHUB_REPOSITORY" --pattern Backend.xlsm --dir "backends/$release_tag"
-          test -s "backends/$release_tag/Backend.xlsm"
-          echo "Backend release: $release_tag"
-          sha256sum "backends/$release_tag/Backend.xlsm"
+          gh release download "$release_tag" --repo "$GITHUB_REPOSITORY" --pattern Backend.xlsm --dir .
+          test -s Backend.xlsm
+          cp Backend.xlsm "Backend-$release_tag.xlsm"
+          echo "tag=$release_tag" >> "$GITHUB_OUTPUT"
+          sha256sum "Backend-$release_tag.xlsm"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -49,3 +50,20 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+      - name: Verify deployed workbook
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+          RELEASE_TAG: ${{ steps.backend.outputs.tag }}
+        run: |
+          url="${PAGES_URL%/}/Backend-${RELEASE_TAG}.xlsm"
+          for attempt in {1..12}; do
+            status="$(curl -sS -o /dev/null -w '%{http_code}' "$url")"
+            if [[ "$status" == "200" ]]; then
+              echo "Verified $url"
+              exit 0
+            fi
+            echo "Attempt $attempt: Pages returned HTTP $status; retrying..."
+            sleep 10
+          done
+          echo "Pages did not serve the workbook after deployment: $url" >&2
+          exit 1
