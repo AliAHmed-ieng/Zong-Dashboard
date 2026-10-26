@@ -1,24 +1,19 @@
-# Zong Network & Power Dashboard — public GitHub Pages demo
+# Zong Network & Power Dashboard — GitHub Pages demo
 
-This no-login demo serves the HTML and a compressed data snapshot from GitHub Pages. The generated `demo-data.json.gz` was derived locally from the randomized `Backend.xlsm`; the workbook itself is not included. GitHub Pages is public, so anyone can download this demo dataset.
+The public dashboard loads `[Backend.xlsm`] from the same GitHub Pages origin. A GitHub Actions workflow downloads the workbook asset from the latest published GitHub Release and deploys it with the dashboard. The browser checks for workbook updates every **3 seconds**, preserving the existing refresh interval.
 
-The browser checks the static data endpoint every **3 seconds**, preserving the dashboard's existing polling interval. When the published file changes, it downloads and applies the new snapshot.
+## Public data warning
 
-## Publish
+This repository and its GitHub Pages site are public. The workbook is also a public Release asset, and the Pages copy is downloadable by anyone. Use only randomized demo data; do not publish confidential or production data.
 
-Upload these files to the root of the public `AliAHmed-ieng/Zong-Dashboard` repository:
+## Dashboard
 
-- `Zong_Network_Power_Dashboard_Mapped.html`
-- `dashboard-config.js`
-- `github-pages-data.js`
-- `demo-data.json.gz`
-- `README.md`
-- `.gitignore`
+https://aliahmed-ieng.github.io/Zong-Dashboard/Zong_Network_Power_Dashboard_Mapped.html
 
-Do **not** upload `Backend.xlsm`. Enable GitHub Pages for the `main` branch and `/ (root)` in the repository's **Settings → Pages**. The dashboard will be available at:
+## Update the workbook
 
-`https://aliahmed-ieng.github.io/Zong-Dashboard/Zong_Network_Power_Dashboard_Mapped.html`
+1. Publish a new GitHub Release containing the updated workbook named exactly `[Backend.xlsm`.
+2. The release publication triggers the Pages deployment. A push to `[main` also downloads and deploys the latest published workbook.
+3. After deployment completes, the open dashboard detects the new workbook on its next 3-second check.
 
-## Update demo data
-
-`demo-data.json.gz` is a static, publicly downloadable snapshot, **not a live connection to SharePoint**. When the workbook changes, regenerate the JSON snapshot from an approved demo workbook and replace the published file. A public page cannot anonymously read a private SharePoint workbook through Graph; later, add user authentication or a secured server-side API if you need live workbook updates without publishing the dataset publicly.
+Changes made only to the SharePoint workbook are **not** mirrored automatically. Upload the updated workbook as a new GitHub Release asset to publish it. This demo has no login; do not use it for private or official backend data.
