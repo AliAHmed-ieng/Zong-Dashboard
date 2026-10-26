@@ -1,3 +1,4 @@
 window.ZONG_DASHBOARD_CONFIG = {
-  workbookUrl: './Backend.xlsm'
+  latestReleaseApiUrl: 'https://api.github.com/repos/AliAHmed-ieng/Zong-Dashboard/releases/latest',
+  backendPath: './backends/'
 };
