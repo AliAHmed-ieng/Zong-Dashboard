@@ -3,8 +3,10 @@
 
   const config = window.ZONG_DASHBOARD_CONFIG;
   const RELEASE_CHECK_INTERVAL_MS = 70_000;
+  const DEPLOYMENT_GRACE_PERIOD_MS = 90_000;
   let currentWorkbookVersion = '';
   let pendingWorkbookVersion = '';
+  let pendingWorkbookReadyAt = 0;
   let lastReleaseCheck = 0;
   let refreshBusy = false;
   let lastError = '';
@@ -25,9 +27,9 @@
     if (status) status.textContent = message;
   }
 
-  async function getLatestReleaseTag() {
+  async function getLatestRelease() {
     const now = Date.now();
-    if (now - lastReleaseCheck < RELEASE_CHECK_INTERVAL_MS) return '';
+    if (now - lastReleaseCheck < RELEASE_CHECK_INTERVAL_MS) return null;
     lastReleaseCheck = now;
 
     const response = await fetch(config.latestReleaseApiUrl, {
@@ -39,7 +41,11 @@
     if (typeof release.tag_name !== 'string' || !release.tag_name) {
       throw new Error('GitHub did not return a latest published release tag.');
     }
-    return release.tag_name;
+    const publishedAt = Date.parse(release.published_at);
+    return {
+      tag: release.tag_name,
+      readyAt: (Number.isFinite(publishedAt) ? publishedAt : now) + DEPLOYMENT_GRACE_PERIOD_MS
+    };
   }
 
   window.refreshGitHubWorkbook = async function (applyWorkbook, toast) {
@@ -51,24 +57,35 @@
         throw new Error('Set the release API URL and backend path in dashboard-config.js.');
       }
 
-      const version = pendingWorkbookVersion || await getLatestReleaseTag();
-      if (!version || version === currentWorkbookVersion) {
+      const release = pendingWorkbookVersion
+        ? { tag: pendingWorkbookVersion, readyAt: pendingWorkbookReadyAt }
+        : await getLatestRelease();
+      if (!release) return;
+      if (release.tag === currentWorkbookVersion) {
         lastError = '';
         return;
       }
-      pendingWorkbookVersion = version;
 
-      const workbookUrl = new URL(config.backendPath + encodeURIComponent(version) + '/Backend.xlsm', document.baseURI);
+      pendingWorkbookVersion = release.tag;
+      pendingWorkbookReadyAt = release.readyAt;
+      if (Date.now() < pendingWorkbookReadyAt) {
+        setLoadingStatus('Waiting for the new release to finish deploying...');
+        return;
+      }
+
+      const workbookUrl = new URL(config.backendPath + encodeURIComponent(release.tag) + '.xlsm', document.baseURI);
+      workbookUrl.searchParams.set('retry', String(Math.floor(Date.now() / 1000)));
       setLoadingStatus('Downloading backend workbook (~45 MB)...');
       const response = await fetch(workbookUrl.href, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Could not download the workbook for release ' + version + ' (' + response.status + ').');
+      if (!response.ok) throw new Error('Could not download the workbook for release ' + release.tag + ' (' + response.status + ').');
       const workbook = await response.blob();
       setLoadingStatus('Reading workbook data...');
       await applyWorkbook(workbook, 'Backend.xlsm', false);
-      currentWorkbookVersion = version;
+      currentWorkbookVersion = release.tag;
       pendingWorkbookVersion = '';
+      pendingWorkbookReadyAt = 0;
       lastError = '';
-      toast('Dashboard updated from release ' + version);
+      toast('Dashboard updated from release ' + release.tag);
     } catch (error) {
       reportError(error, toast);
     } finally {
