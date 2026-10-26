@@ -9,6 +9,8 @@
   function reportError(error, toast) {
     const message = error instanceof Error ? error.message : String(error);
     console.error('Public workbook refresh failed:', error);
+    const loading = document.querySelector('#charts .nd');
+    if (loading) loading.textContent = 'Backend load failed: ' + message;
     if (message !== lastError) {
       toast('Backend refresh failed: ' + message);
       lastError = message;
