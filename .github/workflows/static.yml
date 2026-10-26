@@ -1,4 +1,4 @@
-# Deploy the static dashboard and the workbook attached to each published release
+# Deploy the dashboard and a versioned workbook from each release
 name: Deploy static content to Pages
 
 on:
@@ -28,17 +28,20 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Download workbook for this release
+      - name: Download versioned workbook
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [[ "$GITHUB_EVENT_NAME" == "release" ]]; then
-            gh release download "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --pattern Backend.xlsm --dir .
+            release_tag="$GITHUB_REF_NAME"
           else
-            gh release download --repo "$GITHUB_REPOSITORY" --pattern Backend.xlsm --dir .
+            release_tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
           fi
-          test -s Backend.xlsm
-          sha256sum Backend.xlsm
+          mkdir -p "backends/$release_tag"
+          gh release download "$release_tag" --repo "$GITHUB_REPOSITORY" --pattern Backend.xlsm --dir "backends/$release_tag"
+          test -s "backends/$release_tag/Backend.xlsm"
+          echo "Backend release: $release_tag"
+          sha256sum "backends/$release_tag/Backend.xlsm"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
