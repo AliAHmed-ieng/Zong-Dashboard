@@ -1,4 +1,4 @@
-# Deploy the dashboard and a versioned workbook from each release
+# Deploy the dashboard and versioned workbook from every release
 name: Deploy static content to Pages
 
 on:
@@ -18,7 +18,37 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  trigger_release_deployment:
+    if: github.event_name == 'release'
+    permissions:
+      contents: write
+      actions: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create a unique Pages revision and queue deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch origin main
+          git checkout -B pages-deploy origin/main
+          printf '%s\n' "$GITHUB_REF_NAME" > .pages-release-version
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .pages-release-version
+          git commit -m "Trigger Pages deployment for release $GITHUB_REF_NAME"
+          git push origin pages-deploy --force
+          gh workflow run static.yml --repo "$GITHUB_REPOSITORY" --ref pages-deploy
+
   deploy:
+    if: github.event_name != 'release'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -33,11 +63,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [[ "$GITHUB_EVENT_NAME" == "release" ]]; then
-            release_tag="$GITHUB_REF_NAME"
-          else
-            release_tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
-          fi
+          release_tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
           gh release download "$release_tag" --repo "$GITHUB_REPOSITORY" --pattern Backend.xlsm --dir .
           test -s Backend.xlsm
           cp Backend.xlsm "Backend-$release_tag.xlsm"
