@@ -1,6 +1,6 @@
 # Zong Network & Power Dashboard — GitHub Pages demo
 
-The dashboard is public and reads the workbook attached to the latest published GitHub Release. GitHub Actions deploys each release's workbook to a unique root-level Pages URL, Backend-{tag}.xlsm, and verifies that the URL works before reporting a successful deployment. The dashboard keeps its existing **3-second refresh loop** and checks the public Releases API for a new tag about every **70 seconds**. It waits 90 seconds after release publication for Pages deployment to finish before downloading. It does not read or synchronize SharePoint directly.
+The dashboard is public and reads the workbook attached to the latest published GitHub Release. GitHub Actions deploys each release's workbook to a unique root-level Pages URL, Backend-{tag}.xlsm, and verifies that the URL works before reporting a successful deployment. For release-triggered deployments, Actions creates a unique Pages build revision on a helper branch and dispatches the deployment workflow from it; this prevents different release files on the same source commit from reusing the same Pages revision. The dashboard keeps its existing **3-second refresh loop** and checks the public Releases API for a new tag about every **70 seconds**. It waits 90 seconds after release publication for Pages deployment to finish before downloading. It does not read or synchronize SharePoint directly.
 
 ## Important: public data
 
