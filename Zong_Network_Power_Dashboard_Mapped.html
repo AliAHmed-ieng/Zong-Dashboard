@@ -1,0 +1,353 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Zong | Network &amp; Power Intelligence</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"><style>:root{--pink:#e6007e;--pink2:#ff4fa8;--lime:#8dc63f;--limed:#5fa11f;--plum:#3a0f2e;--ink:#2b1b26;--muted:#85707d;--bg:#f4eff3;--card:#fff;--line:#eadde6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:12px/1.35 Inter,"Segoe UI",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+/* header */
+header{background:linear-gradient(100deg,#cf006c,#e6007e 50%,#f2379c);color:#fff;position:relative;overflow:hidden}
+header:after{content:"";position:absolute;right:-50px;top:0;bottom:0;width:min(46%,560px);background:var(--lime);transform:skewX(-25deg);box-shadow:-14px 0 0 -4px #ffffff40}
+.hin{position:relative;z-index:1;max-width:1700px;margin:auto;padding:9px 16px;display:flex;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:9px}
+.wm{font-weight:900;font-size:22px;letter-spacing:1px;font-style:italic}
+.wm i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--lime);margin-left:3px;box-shadow:0 0 0 2px #fff6}
+.ttl{border-left:1px solid #fff6;padding-left:10px;line-height:1.15}.ttl b{display:block;font-size:13px;letter-spacing:.3px}.ttl span{font-size:10px;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.hs{display:flex;gap:5px;margin-left:8px}
+.hr2{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--plum)}
+.hs .chip{background:#ffffff26;border-color:#ffffff59;color:#fff;padding:5px 12px;font-size:12px}
+.hs .chip.on{background:#fff;color:var(--pink);border-color:#fff}
+.hv{display:flex;gap:4px}
+.hv .chip{background:#ffffff8c;border-color:transparent;color:#24401a;padding:5px 11px;font-size:12px}
+.hv .chip.on{background:var(--plum);color:#fff}
+.ib{display:inline-flex;align-items:center;gap:5px;border:0;background:#ffffffb3;color:var(--plum);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700}
+.ib:hover{background:#fff}
+/* layout */
+main{max-width:1700px;margin:auto;padding:10px 16px 18px}
+.chip{border:1px solid #e3d2dc;background:#fff;color:#5a4654;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:650;white-space:nowrap;transition:background .12s,color .12s,transform .12s}
+.chip:hover{transform:translateY(-1px);border-color:var(--pink)}
+.chip.on{background:var(--pink);border-color:var(--pink);color:#fff}
+.chip.l.on{background:var(--limed);border-color:var(--limed)}
+.fbar{background:#fff;border:1px solid var(--line);border-left:4px solid var(--lime);border-radius:10px;padding:7px 12px;display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;margin-bottom:10px;box-shadow:0 1px 3px #3a0f2e10}
+.grp{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.gl{font-size:9.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--muted)}
+.chips{display:flex;gap:3px;flex-wrap:wrap}
+.sep{width:1px;height:16px;background:var(--line);margin:0 3px}
+.range{margin-left:auto;font-size:10.5px;color:var(--muted);font-weight:600}
+/* kpis */
+.kpis{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin-bottom:8px}
+.kpi{background:#fff;border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:8px;padding:5px 8px;display:flex;align-items:flex-end;gap:4px;min-width:0;box-shadow:0 1px 3px #3a0f2e10;animation:up .35s both}
+.kpi:nth-child(even){border-left-color:var(--lime)}
+.kl{font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;font-weight:800;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kv{font-size:18px;font-weight:850;letter-spacing:-.5px;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap}.kv small{font-size:10px;font-weight:700;color:var(--muted);margin-left:2px;letter-spacing:0}
+.kpi>div:first-child{min-width:0}
+/* charts */
+.charts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;grid-auto-flow:dense}
+.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--pink);border-radius:9px;padding:6px 8px 4px;box-shadow:0 1px 3px #3a0f2e10;min-width:0;animation:up .4s both}
+.card.g{border-top-color:var(--lime)}.c2{grid-column:span 1}
+.ch{display:flex;justify-content:space-between;align-items:baseline;gap:8px;min-height:17px}
+.ch h3{margin:0;font-size:11px;font-weight:780;white-space:nowrap}
+.hr{font-size:10px;color:var(--muted);display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;font-weight:600}
+.hr i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px}
+.hr b{color:var(--ink)}
+.cb{height:96px;position:relative}.cb.t{height:108px}
+.cb svg{display:block;width:100%;height:100%;overflow:visible}
+.ax{fill:#9a8793;font-size:9.5px}.gr{stroke:#f0e6ed;stroke-width:1}
+.ln{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1s ease-out forwards}
+.avl{stroke:#b9a5b2;stroke-dasharray:4 4;stroke-width:1}
+.nd{height:100%;display:grid;place-items:center;color:var(--muted);font-size:11px}
+.bar{transform-origin:bottom;animation:gv .6s cubic-bezier(.2,.8,.2,1) both}
+.bar:hover{filter:brightness(1.12)}
+.hb{display:grid;grid-template-columns:minmax(60px,34%) 1fr auto;gap:7px;align-items:center;height:21px;font-size:11px;break-inside:avoid}
+.hbl{columns:2;column-gap:18px;height:100%;overflow:hidden}.hbl.one{columns:1}
+.hl{color:#6a5663;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hl i{display:inline-block;width:6px;height:6px;border-radius:2px;margin-right:5px}
+.ht{height:8px;background:#f5eef3;border-radius:99px;position:relative;overflow:hidden}
+.ht .rg{position:absolute;top:0;bottom:0;border-radius:99px;opacity:.28}
+.ht .hf{position:absolute;left:0;top:0;bottom:0;border-radius:99px;transform-origin:left;animation:gh .7s cubic-bezier(.2,.8,.2,1) both}
+.hv2{font-weight:800;font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+.hbs{display:flex;flex-direction:column;justify-content:space-around;height:100%}
+.dn{display:flex;align-items:center;gap:12px;height:100%}.dn svg{flex:none}
+.dn circle{transition:stroke-width .15s}.dn circle:hover{stroke-width:calc(var(--sw) + 5px)}
+.dbig{font-size:19px;font-weight:850;fill:var(--ink)}.dsm{font-size:9px;fill:#9a8793;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.dl{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;font-size:11px}
+.dl div{display:flex;align-items:center;gap:6px}.dl i{width:9px;height:9px;border-radius:3px;flex:none}.dl span{flex:1;color:#6a5663;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dl b{font-variant-numeric:tabular-nums}
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--plum);color:#fff;border-radius:8px;padding:6px 9px;font-size:11px;box-shadow:0 8px 20px #3a0f2e55;opacity:0;transition:opacity .08s;transform:translate(-50%,-125%);white-space:nowrap;line-height:1.4}
+.tip>span{color:#e9c3da;display:block;font-size:10px}.tip b{font-variant-numeric:tabular-nums}.tip i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.tip div{display:flex;justify-content:space-between;gap:12px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--plum);color:#fff;padding:8px 14px;border-radius:99px;font-size:12px;z-index:70;box-shadow:0 8px 20px #0004}
+@keyframes up{from{opacity:0;transform:translateY(6px)}}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes gv{from{transform:scaleY(0)}}@keyframes gh{from{transform:scaleX(0)}}
+@media(max-width:1200px){.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1000px){.charts{grid-template-columns:repeat(2,minmax(0,1fr))}header:after{display:none}.hin{flex-wrap:wrap}.hr2{margin-left:0}.hr2,.hs{color:#fff}}
+@media(max-width:600px){.charts{grid-template-columns:1fr}.c2{grid-column:span 1}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.hbl{columns:1}.ttl{display:none}.range{margin-left:0}.hr2 .ib span{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.ln{stroke-dashoffset:0}}
+.cb .dn svg{width:auto;height:auto;flex:none}.kl{font-size:9px;letter-spacing:.5px}
+.few .hb{height:30px}
+</style></head><body><div class="tip" id="tip"></div>
+<header><div class="hin"><div class="logo"><div class="wm">ZONG<i></i></div><div class="ttl"><b>Network &amp; Power Intelligence</b><span>Engineering South</span></div></div>
+<div class="hs" id="sites"></div>
+<div class="hr2"><div class="hv" id="views"></div><label class="ib" title="Load an updated Backend.xlsm">↥ <span>Update data</span><input id="fileInput" type="file" accept=".xlsx,.xlsm,.xls" hidden></label><button class="ib" id="exportBtn" title="Export filtered CSV">⤓ <span>CSV</span></button></div></div></header>
+<main><section class="fbar" id="filters"></section><section class="kpis" id="kpis"></section><section class="charts" id="charts"><div class="card"><div class="nd" style="height:120px">Loading data…</div></div></section></main>
+<script src="./dashboard-config.js"></script><script src="./github-pages-data.js"></script><script>
+let DATA=null;const $=id=>document.getElementById(id);
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const P={pink:'#e6007e',lime:'#7dbb2f',plum:'#5b1e4f',amber:'#f0a30a',slate:'#5f7080',rose:'#ff7ac0'};
+const PAL=[P.pink,P.lime,P.plum,P.amber,P.slate,P.rose];
+let S={site:'Korangi',view:'load',year:'',month:'',quarter:'',period:'30',res:'auto',unit:'KW',stat:'avg',cat:'',item:'all'};
+const norm=s=>String(s).toLowerCase().replace(/\s+/g,' ').trim();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function num(v){if(v==null||v===''||typeof v==='boolean')return null;if(typeof v==='number')return isFinite(v)?v:null;let s=String(v).trim().replace(/,/g,''),pc=s.endsWith('%');if(pc)s=s.slice(0,-1);if(s==='')return null;let n=Number(s);return isFinite(n)?(pc?n/100:n):null}
+function fmt(v,d){if(v==null||!isFinite(v))return '—';let a=Math.abs(v);return v.toLocaleString('en-US',{maximumFractionDigits:d!=null?d:(a>=1000?0:a>=10?1:2)})}
+const afs=step=>v=>{let a=Math.abs(v);if(step>=1000&&a>=1000)return (v/1000).toFixed(step>=10000?0:1)+'k';if(step>=1)return Math.round(v).toLocaleString('en-US');if(step>=.1)return v.toFixed(1);return v.toFixed(2)};
+const ul=()=>S.unit==='AMP'?'A':'kW';
+const sum=a=>a.reduce((x,y)=>x+y,0);
+function st(a,w){a=a.filter(v=>v!=null);if(!a.length)return null;if(w==='max')return a.reduce((x,y)=>y>x?y:x);if(w==='min')return a.reduce((x,y)=>y<x?y:x);return sum(a)/a.length}
+const avg=a=>st(a,'avg');
+const nd=el=>{el.innerHTML='<div class="nd">No data for this selection</div>'};
+/* ---------- site configuration: friendly equipment names ---------- */
+const L3=(p,s='')=>[1,2,3].map(i=>p+i+s);
+const CFG={
+Korangi:{src:'WAPDA / DG',volt:L3('CP V-L'),pue:'PUE',telco:'Total MSC Telco Load',non:'Total MSC Non-Telco Load',phases:L3('T F AMP-L'),
+ items:[
+ {cat:'Transformer',name:'Transformer',kw:'T F KW MAX',amp:L3('T F AMP-L'),pct:'Load % on TransFormer'},
+ {cat:'NDC',name:'NDC HVAC',kw:'NDC HVAC (KW)',amp:L3('NDC HVAC (A)-L')},
+ {cat:'NDC',name:'NDC Rectifier',kw:'NDC Rect (KW)',amp:L3('NDC Rect (A)-L')},
+ {cat:'NDC',name:'NDC Total',kw:'Total NDC Load KW',amp:L3('Total NDC Amp-L'),pct:'NDC DG Load %'},
+ {cat:'ODC',name:'ODC HVAC',kw:'ODC HVAC (Kw)',amp:L3('ODC HVAC Amp-L')},
+ {cat:'ODC',name:'ODC Rectifier',kw:'ODC Rectifier  KW'},
+ {cat:'ODC',name:'ODC Total',kw:'ODC Load KW',amp:L3('ODC Amp-L'),pct:'ODC DG Load %'},
+ {cat:'Rectifiers',name:'Delta 1',kw:'Delta-1 AC-KW',amp:['Delta-1 Amp'],pct:'Delta1%'},
+ {cat:'Rectifiers',name:'Delta 2',kw:'Delta-2 AC-KW',amp:['Delta-2 Amp'],pct:'Delta2%'},
+ {cat:'Rectifiers',name:'ODC Huawei 1',kw:'Huawei Rect-1 AC-Kw',amp:['Huawei Rect-1 Amp'],pct:'Huawei 1'},
+ {cat:'Rectifiers',name:'ODC Huawei 2',kw:'Huawei Rect-2 AC-KW',amp:['Huawei Rect-2 Amp'],pct:'Huawei 2'},
+ {cat:'Rectifiers',name:'NDC Huawei 1',kw:'NDC Huawei Rect 1 AC- KW',amp:['NDC Huawei Rect 1 Amp'],pct:'NDC Huawei 1'},
+ {cat:'Rectifiers',name:'NDC Huawei 2',kw:'NDC Huawei Rect 2 AC- KW',amp:['NDC Huawei Rect 2 Amp'],pct:'NDC Huawei 2'},
+ {cat:'UPS',name:'UPS 1',kw:'UPS 1 KW',amp:['UPS-1Amp','UPS-1Amp2','UPS-1Amp3'],pct:'UPS 1'},
+ {cat:'UPS',name:'UPS 2',kw:'UPS 2 KW',amp:['UPS-2Amp','UPS-2Amp4','UPS-2Amp5'],pct:'UPS 2'},
+ {cat:'Admin',name:'Admin',kw:'Admin Load KW',amp:L3('Admin Load Amp-L')}],
+ temps:[['Battery room',['Bat Room-T1','Bat Room-T2']],['Equipment room',['Equip Room-T1','Equip Room-T2','Equip Room-T3','Equip Room-T4']],['LT room',['LT Room-T1','LT Room-T2']],['Sync room',['Sync Room']],['NDC equipment',['NDC-Equip Room-T1','NDC-Equip Room-T2','NDC-Equip Room-T3','NDC-Equip Room-T4','NDC-Equip Room-T5']],['NDC power room',['NDC Power Room T1','NDC Power Room T2']]]},
+Dalmia:{src:'KE / DG',volt:L3('CP V-L'),pue:'PUE',telco:'Telco Load',non:'Non Telco Load',phases:L3('T F AMP-L'),
+ items:[
+ {cat:'Transformer',name:'Transformer',kw:'T F KW MAX',amp:L3('T F AMP-L'),pct:'Load % on Trans Former'},
+ ...[1,2,3].map(i=>({cat:'Rectifiers',name:'Huawei '+i,kw:`Huawei Rect-${i} AC-Kw`,amp:[`Huawei Rect-${i} DC Amp`],pct:`Huawei ${i} Load`})),
+ ...[1,2].map(i=>({cat:'UPS',name:'UPS '+i,kw:`UPS ${i} KW`,amp:L3(`UPS-${i} Amp L`),pct:`UPS ${i} Load%`})),
+ {cat:'HVAC',name:'HVAC',kw:'HVAC (Kw)',amp:L3('HVAC AMP L')}]},
+Hyderabad:{src:'WAPDA / DG',volt:L3('CP V L'),pue:'PUE',telco:'Telco Load KW',non:'Non Telco Load KW',phases:L3('TF-Amp L'),
+ items:[
+ {cat:'Transformer',name:'Transformer',kw:'T F KW MAX',amp:L3('TF-Amp L'),pct:'Load % on Trans Former'},
+ ...[1,2].map(i=>({cat:'Rectifiers',name:'Huawei '+i,kw:`Huawei Rect-${i} AC KW`,amp:L3(`Huawei Rect-${i} AC Amp L`),pct:`Huawei Rect-${i} Load %`}))],
+ temps:[['Stulz cooling',['Stulz-1','Stulz-2','Stulz-3','Stulz-4']],['Gree cooling',['Gree 1','Gree 2','Gree 3']],['Power room',['Power Room']],['Equipment room',['Temp-1','Temp-2','Temp-3','Temp-4']]]},
+Quetta:{src:'Power status',volt:L3('CP-V-L'),pue:'PUE',telco:'Telco Load KW',non:'Non Telco Load KW',phases:L3('T F AMP-L'),
+ items:[
+ {cat:'Transformer',name:'Transformer',kw:'T F KW MAX',amp:L3('T F AMP-L')},
+ ...[1,2].map(i=>({cat:'Rectifiers',name:'Eltech '+i,kw:`Eltech Rect-${i}-AC KW`,amp:[`Eltech Rect-${i}-DC Amp`],pct:`Eltech Rect-${i} Load %`})),
+ {cat:'Rectifiers',name:'Rectifier total',kw:'Rect load KW',amp:L3('Rect-Amp-L')}]}};
+const FUEL={Korangi:['KKMSC Fuel Capacity','KKMSC Dead fuel','KKMSC available Fuel','KKMSC Backup Hrs'],Dalmia:['Dalmia Fuel Capacity %','Dalmia Dead fuel','Dalmia available Fuel','Dalmia Backup Hrs'],Hyderabad:['Hyd Fuel Capacity %','Hyd Dead fuel','Hyd available Fuel','Hyd Backup Hrs'],Quetta:['Quetta Fuel Capacity','Quetta Dead fuel','Quetta available Fuel','Quetta Backup Hrs']};
+/* Fuel-detail mappings use the workbook's real sheet/header names. */
+const FUEL_DETAIL={
+ Korangi:{sheets:['Korangi Fuel Consumtion Data'],consume:['Fuel Consume','Fuel Consumed'],hours:['DG-1 hrs','DG-2 hrs','DG-3 hrs','DG-4 hrs','DG-5 hrs'],dgFuel:['DG1 Fuel consume','DG2 Fuel consume','DG3 Fuel consume','DG4 Fuel consume','DG5 Fuel consume']},
+ Dalmia:{sheets:['Dalmia Fuel'],consume:['Fuel Consume','Fuel Consumed'],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:['DG-1 Fuel consume(L)','DG-2 Fuel consume(L)']},
+ Hyderabad:{sheets:['Hyderabad Fuel'],consume:['Fuel Consume','Fuel Consumed','ZNV Fuel Consume','Total Fuel2'],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:['DG-1 Fuel Consumption','DG-2 Fuel Consumption']},
+ Quetta:{sheets:['Quetta Fuel'],consume:['Fuel Consumed','Fuel Consume'],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:[]}
+};
+const headerMap=headers=>{const m={};(headers||[]).forEach(h=>{if(h!=null)m[norm(h)]=h});return m};
+const getHeader=(headers,names)=>{const m=headerMap(headers);for(const n of names||[]){if(m[norm(n)])return m[norm(n)]}return null};
+function detailFuelRows(site){
+ const cfg=FUEL_DETAIL[site];if(!cfg||!DATA.fuelSheets)return [];
+ const rows=[];
+ for(const name of cfg.sheets){const sh=Object.keys(DATA.fuelSheets).find(k=>norm(k)===norm(name));if(!sh)continue;
+  const src=DATA.fuelSheets[sh]||{},headers=src.headers||[],hm=headerMap(headers);
+  for(const original of (src.rows||[])){const r={...original,_fuelSheet:sh};
+   let dh=getHeader(headers,['Date']);if(dh&&r[dh]!=null){const dt=new Date(r[dh]);if(!isNaN(dt)){r.Year=dt.getFullYear();r.Month=MON[dt.getMonth()];}}
+   r._consumeHeader=getHeader(headers,cfg.consume);
+   r._dgFuelHeaders=cfg.dgFuel.map(n=>getHeader(headers,[n])).filter(Boolean);
+   r._dgHourHeaders=cfg.hours.map(n=>getHeader(headers,[n])).filter(Boolean);
+   rows.push(r);
+  }
+ }
+ return stamp(rows);
+}
+function fuelDetailStats(site){
+ const cfg=FUEL_DETAIL[site];if(!cfg)return [];
+ const rows=filt(detailFuelRows(site));
+ if(!rows.length)return [];
+ const sheetNames=[...new Set(rows.map(r=>r._fuelSheet))];
+ // Prefer the primary consumption field on the site's main fuel sheet.
+ const primary=rows.filter(r=>r._consumeHeader&&num(r[r._consumeHeader])!=null);
+ let kpis=[];
+ if(primary.length){
+  const vals=primary.map(r=>num(r[r._consumeHeader])).filter(v=>v!=null);
+  if(vals.length)kpis.push({l:'Avg fuel consumption',v:avg(vals),u:'L'});
+ }
+ const dgHeaders=[...new Set(rows.flatMap(r=>r._dgFuelHeaders||[]))];
+ // Dalmia has no overall consumption column: sum DG-1 + DG-2 per record before averaging.
+ if(!primary.length&&dgHeaders.length){
+  const totals=rows.map(r=>{const vals=dgHeaders.map(h=>num(r[h])).filter(v=>v!=null);return vals.length?sum(vals):null}).filter(v=>v!=null);
+  if(totals.length)kpis.push({l:'Avg fuel consumption',v:avg(totals),u:'L'});
+ }
+ for(const h of dgHeaders){const vals=rows.map(r=>num(r[h])).filter(v=>v!=null);if(vals.length)kpis.push({l:h.replace(/\s*\(L\)/i,'').replace(/fuel\s+(consume|consumption).*/i,'fuel').trim(),v:avg(vals),u:'L'});}
+ const hrHeaders=[...new Set(rows.flatMap(r=>r._dgHourHeaders||[]))];
+ for(const h of hrHeaders){const vals=rows.map(r=>num(r[h])).filter(v=>v!=null);if(vals.length)kpis.push({l:h.replace(/hrs?/i,'running hours'),v:avg(vals),u:'h',d:1});}
+ return kpis;
+}
+
+/* ---------- data prep ---------- */
+function tsOf(r){let y=num(r.Year),m=r.Month,d=r.Date,mi=-1;
+ if(typeof m==='number')mi=m-1;else if(m!=null){mi=MON.findIndex(x=>x.toLowerCase()===String(m).slice(0,3).toLowerCase());if(mi<0&&num(m)!=null)mi=num(m)-1}
+ let dn=num(d);
+ if(dn==null||dn>31||y==null||mi<0){let p=Date.parse(d instanceof Date?d:String(d));if(!isFinite(p))return null;let dt=new Date(p);y=dt.getFullYear();mi=dt.getMonth();dn=dt.getDate()}
+ let h=0;if(r.Time!=null){let mm=String(r.Time).match(/(\d{1,2}):(\d{2})/);if(mm)h=+mm[1]}
+ return{t:Date.UTC(y,mi,dn,h),y,m:mi,d:dn,h}}
+function stamp(rows){let o=[];for(const r of rows){let t=tsOf(r);if(t){r._t=t.t;r._y=t.y;r._m=t.m;r._d=t.d;r._h=t.h;o.push(r)}}return o.sort((a,b)=>a._t-b._t)}
+function prep(site){let s=DATA.sites[site];return s._p||(s._p=stamp(s.rows))}
+function fuelRows(){return DATA._fp||(DATA._fp=stamp(DATA.fuelStatus||[]))}
+function fuelDateRows(){
+ const a=fuelRows().map(r=>({_t:r._t,_y:r._y,_m:r._m,_d:r._d,_h:r._h}));
+ const sites=Object.keys(DATA.sites||{});for(const site of sites)for(const r of detailFuelRows(site))a.push({_t:r._t,_y:r._y,_m:r._m,_d:r._d,_h:r._h});
+ return a.sort((x,y)=>x._t-y._t);
+}
+function info(site){let s=DATA.sites[site];if(s._info)return s._info;let hm={};s.headers.forEach(h=>hm[norm(h)]=h);const H=n=>n?hm[norm(n)]:undefined;let c=CFG[site]||{};
+ let items=(c.items||[]).map(it=>({cat:it.cat,name:it.name,kw:H(it.kw),amp:(it.amp||[]).map(H).filter(Boolean),pct:H(it.pct)})).filter(it=>it.kw||it.amp.length);
+ let temps=(c.temps||[]).map(t=>({name:t[0],hs:t[1].map(H).filter(Boolean)})).filter(t=>t.hs.length);
+ return s._info={items,temps,src:H(c.src),volt:(c.volt||[]).map(H).filter(Boolean),pue:H(c.pue),telco:H(c.telco),non:H(c.non),phases:(c.phases||[]).map(H).filter(Boolean),cats:[...new Set(items.map(i=>i.cat))]}}
+function iv(it,r){if(S.unit==='AMP'){let a=it.amp.map(h=>num(r[h])).filter(v=>v!=null);return a.length?avg(a):null}return it.kw?num(r[it.kw]):null}
+function filt(rows,month=true,period=true){if(S.year)rows=rows.filter(r=>String(r._y)===S.year);if(month&&S.month!=='')rows=rows.filter(r=>r._m===+S.month);if(month&&S.quarter)rows=rows.filter(r=>Math.floor(r._m/3)+1===+S.quarter);if(period&&S.period!=='all'&&rows.length){let cut=rows[rows.length-1]._t-(+S.period)*864e5;rows=rows.filter(r=>r._t>cut)}return rows}
+function groups(rows){let span=rows.length?(rows[rows.length-1]._t-rows[0]._t)/864e5:0;let res=S.res==='auto'?(span<=4?'h':span<=400?'d':'m'):S.res;
+ let kf=res==='h'?r=>r._t:res==='d'?r=>Math.floor(r._t/864e5):r=>r._y*12+r._m,out=[],last=null,g;
+ for(const r of rows){let k=kf(r);if(k!==last){g={rows:[],r0:r};out.push(g);last=k}g.rows.push(r)}
+ if(out.length>480){let n=Math.ceil(out.length/480),o2=[];for(let i=0;i<out.length;i+=n){let ch=out.slice(i,i+n);o2.push({rows:ch.flatMap(x=>x.rows),r0:ch[0].r0})}out=o2}
+ out.forEach(g=>{let r=g.r0,yy=String(r._y).slice(-2);g.label=res==='h'?`${r._d} ${MON[r._m]} ${String(r._h).padStart(2,'0')}:00`:res==='d'?`${r._d} ${MON[r._m]} ${r._y}`:`${MON[r._m]} ${r._y}`;g.short=res==='h'?`${r._d} ${String(r._h).padStart(2,'0')}h`:res==='d'?`${r._d} ${MON[r._m]} '${yy}`:`${MON[r._m]} '${yy}`});
+ return{g:out,res}}
+const series=(G,fn,w)=>G.g.map(g=>st(g.rows.map(fn),w||S.stat));
+/* ---------- chart primitives ---------- */
+let UID=0;
+function setHR(el,h){let c=el.closest('.card');if(c){let x=c.querySelector('.hr');if(x)x.innerHTML=h}}
+function lineChart(el,o){let W=el.clientWidth,H=el.clientHeight;if(!W||!H)return;
+ let ser=o.series.filter(s=>s.vals.some(v=>v!=null));if(!ser.length){nd(el);return}
+ let n=o.labels.length,pl=40,pr=6,pt=8,pb=17,all=ser.flatMap(s=>s.vals).filter(v=>v!=null),mn=Math.min(...all),mx=Math.max(...all);
+ if(o.ref!=null){mn=Math.min(mn,o.ref);mx=Math.max(mx,o.ref)}if(mn===mx){mn-=1;mx+=1}let pad=(mx-mn)*.12;mx+=pad;mn=o.min0?Math.min(0,mn):mn-pad;
+ let X=i=>pl+(n===1?(W-pl-pr)/2:i*(W-pl-pr)/(n-1)),Y=v=>H-pb-(v-mn)/(mx-mn)*(H-pt-pb),g='',id='a'+(++UID);
+ for(let k=0;k<4;k++){let v=mx-k*(mx-mn)/3,yy=pt+k*(H-pt-pb)/3;g+=`<line class="gr" x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}"/><text class="ax" x="${pl-5}" y="${yy+3}" text-anchor="end">${(o.yf||afs((mx-mn)/3))(v)}</text>`}
+ let nl=W<260?3:4,xl='';for(let k=0;k<nl&&n>0;k++){let i=nl===1?0:Math.round(k*(n-1)/(nl-1));xl+=`<text class="ax" x="${X(i)}" y="${H-3}" text-anchor="${k===0?'start':k===nl-1?'end':'middle'}">${esc(o.short[i])}</text>`}
+ let defs='',body='';ser.forEach((s,si)=>{let d='',seg=[],segs=[];s.vals.forEach((v,i)=>{if(v==null){if(seg.length)segs.push(seg);seg=[]}else seg.push([X(i),Y(v)])});if(seg.length)segs.push(seg);
+  segs.forEach(sg=>{d+=sg.length>1?sg.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(''):`M${sg[0][0]-.5} ${sg[0][1]}L${sg[0][0]+.5} ${sg[0][1]}`});
+  if(o.area&&si===0){defs=`<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.color}" stop-opacity=".28"/><stop offset="1" stop-color="${s.color}" stop-opacity="0"/></linearGradient>`;
+   segs.forEach(sg=>{if(sg.length>1)body+=`<path d="${sg.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join('')}L${sg[sg.length-1][0]} ${H-pb}L${sg[0][0]} ${H-pb}Z" fill="url(#${id})"/>`})}
+  body+=`<path class="ln" pathLength="1" d="${d}" stroke="${s.color}"/>`});
+ let av=o.avgLine?avg(ser[0].vals):null;
+ if(av!=null)body+=`<line class="avl" x1="${pl}" x2="${W-pr}" y1="${Y(av)}" y2="${Y(av)}"/>`;
+ if(o.ref!=null)body+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(o.ref)}" y2="${Y(o.ref)}" stroke="${P.pink}" stroke-dasharray="3 3" opacity=".7"/>`;
+ el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs>${defs}</defs>${g}${xl}${body}<line id="${id}x" y1="${pt}" y2="${H-pb}" stroke="#b9a5b2" stroke-dasharray="3 3" opacity="0"/><g id="${id}d"></g><rect id="${id}h" x="${pl}" y="0" width="${W-pl-pr}" height="${H}" fill="transparent" data-tip=""/></svg>`;
+ let hit=$(id+'h'),cx=$(id+'x'),dg=$(id+'d');
+ hit.addEventListener('mousemove',e=>{let r=hit.getBoundingClientRect(),i=Math.max(0,Math.min(n-1,Math.round((e.clientX-r.left)/(r.width||1)*(n-1))));cx.setAttribute('x1',X(i));cx.setAttribute('x2',X(i));cx.setAttribute('opacity',1);
+  dg.innerHTML=ser.map(s=>s.vals[i]==null?'':`<circle cx="${X(i)}" cy="${Y(s.vals[i])}" r="3.5" fill="#fff" stroke="${s.color}" stroke-width="2"/>`).join('');
+  hit.setAttribute('data-tip',`<span>${esc(o.labels[i])}</span>`+ser.map(s=>`<div><span><i style="background:${s.color}"></i>${esc(s.name)}</span><b>${fmt(s.vals[i])}${o.unit?' '+o.unit:''}</b></div>`).join(''))});
+ hit.addEventListener('mouseleave',()=>{cx.setAttribute('opacity',0);dg.innerHTML=''})}
+function barChart(el,o){let W=el.clientWidth,H=el.clientHeight,it=o.items;if(!W||!H||!it.length||!it.some(x=>x.val!=null)){nd(el);return}
+ let pl=40,pr=4,pt=8,pb=17,vals=it.filter(x=>x.val!=null).map(x=>x.val),mn=Math.min(0,...vals),mx=Math.max(0,...vals);if(o.zoom&&mn>=0)mn=Math.max(0,Math.min(...vals)-(Math.max(...vals)-Math.min(...vals)||1)*.9);if(mx===mn)mx=mn+1;mx+=(mx-mn)*.06;
+ let Y=v=>H-pb-(v-mn)/(mx-mn)*(H-pt-pb),bw=(W-pl-pr)/it.length,g='';
+ for(let k=0;k<4;k++){let v=mx-k*(mx-mn)/3,yy=pt+k*(H-pt-pb)/3;g+=`<line class="gr" x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}"/><text class="ax" x="${pl-5}" y="${yy+3}" text-anchor="end">${afs((mx-mn)/3)(v)}</text>`}
+ let step=Math.ceil(it.length/(W<260?5:7)),b='',lab='',w=Math.max(1,bw*(it.length>60?.9:.68));
+ it.forEach((x,i)=>{if(x.val==null)return;let y0=Y(Math.max(mn,0)),y1=Y(x.val),cx=pl+i*bw+bw/2;b+=`<rect class="bar" style="animation-delay:${Math.min(i*12,300)}ms" x="${cx-w/2}" y="${Math.min(y0,y1)}" width="${w}" height="${Math.max(1,Math.abs(y1-y0))}" rx="${w>5?2:0}" fill="${x.color}" data-tip="${esc(`<span>${x.label}</span><b>${o.fmt?o.fmt(x.val):fmt(x.val)}</b>`)}"/>`;if(i%step===0)lab+=`<text class="ax" x="${cx}" y="${H-3}" text-anchor="middle">${esc(x.short||x.label)}</text>`});
+ el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${g}${b}${lab}</svg>`}
+function donut(el,o){let tot=sum(o.items.map(x=>Math.max(0,x.val)));if(!tot){nd(el);return}
+ let D=Math.min(el.clientHeight-2,el.clientWidth*.52),R=D/2,sw=R*.34,r=R-sw/2,C=2*Math.PI*r,cum=0;
+ let cs=o.items.map(x=>{let l=Math.max(0,x.val)/tot*C,s=`<circle cx="${R}" cy="${R}" r="${r}" fill="none" stroke="${x.color}" stroke-width="${sw}" style="--sw:${sw}px" stroke-dasharray="${l} ${C-l}" stroke-dashoffset="${-cum}" transform="rotate(-90 ${R} ${R})" data-tip="${esc(`<span>${x.label}</span><b>${(x.val/tot*100).toFixed(1)}%</b>`)}"/>`;cum+=l;return s}).join('');
+ el.innerHTML=`<div class="dn"><svg width="${D}" height="${D}" viewBox="0 0 ${D} ${D}">${cs}<text x="${R}" y="${R+2}" text-anchor="middle" class="dbig">${o.big}</text><text x="${R}" y="${R+14}" text-anchor="middle" class="dsm">${o.small||''}</text></svg><div class="dl">${o.items.map(x=>`<div><i style="background:${x.color}"></i><span>${esc(x.label)}</span><b>${(x.val/tot*100).toFixed(1)}%</b></div>`).join('')}</div></div>`}
+function hbars(el,rows,o={}){rows=rows.filter(r=>r.val!=null);if(!rows.length){nd(el);return}let mx=Math.max(...rows.map(r=>r.max??r.val),1e-9);
+ el.innerHTML=`<div class="${o.cols?'hbl':'hbs'}${o.cols&&rows.length<5?' one':''}${rows.length<=4?' few':''}">`+rows.map((r,i)=>`<div class="hb" data-tip="${esc(`<span>${r.label}</span><b>${r.min!=null?`min ${fmt(r.min)} · avg ${fmt(r.val)} · max ${fmt(r.max)}`:fmt(r.val)+(o.unit||'')}</b>`)}"><span class="hl" title="${esc(r.label)}">${r.dot?`<i style="background:${r.dot}"></i>`:''}${esc(r.label)}</span><span class="ht">${r.max!=null?`<i class="rg" style="left:${r.val/mx*100}%;width:${Math.max(0,(r.max-r.val)/mx*100)}%;background:${r.color}"></i>`:''}<i class="hf" style="width:${Math.max(1.5,r.val/mx*100)}%;background:${r.color};animation-delay:${i*30}ms"></i></span><span class="hv2">${fmt(r.val)}${o.unit||''}</span></div>`).join('')+'</div>'}
+function spark(vals,color){let v=vals.filter(x=>x!=null);if(v.length<2)return '';if(v.length>40){let k=Math.ceil(v.length/40);v=v.filter((_,i)=>i%k===0)}let mn=Math.min(...v),mx=Math.max(...v);if(mn===mx){mn-=1;mx+=1}
+ let p=v.map((x,i)=>(i?'L':'M')+(i*58/(v.length-1)).toFixed(1)+' '+(24-(x-mn)/(mx-mn)*22).toFixed(1)).join('');return `<svg viewBox="0 0 58 26"><path d="${p}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
+/* ---------- filters ---------- */
+function chipRow(k,opts,cur,cls=''){return `<div class="chips" data-k="${k}">`+opts.map(([v,l])=>`<button class="chip ${cls} ${String(cur)===String(v)?'on':''}" data-v="${esc(v)}">${esc(l)}</button>`).join('')+'</div>'}
+function renderFilters(){let sites=Object.keys(DATA.sites);if(S.view==='load'&&S.site==='all'){S.site=sites[0];S.item='all';S.cat=''}if(!sites.includes(S.site)&&S.site!=='all')S.site=sites[0];
+ $('sites').innerHTML=chipRow('site',[...(S.view==='fuel'?[['all','All locations']]:[]),...sites.map(s=>[s,s])],S.site);$('views').innerHTML=chipRow('view',[['load','Load & Equipment'],['fuel','Fuel & Backup']],S.view);
+ let rows=S.view==='fuel'?fuelDateRows():S.site==='all'?sites.flatMap(s=>prep(s)).sort((a,b)=>a._t-b._t):prep(S.site),ys=[...new Set(rows.map(r=>r._y))].sort();if(S.year&&!ys.map(String).includes(S.year))S.year='';
+ let ms=[...new Set(rows.filter(r=>!S.year||String(r._y)===S.year).map(r=>r._m))].sort((a,b)=>a-b);if(S.month!==''&&!ms.includes(+S.month))S.month='';
+ let h=`<div class="grp"><span class="gl">Annual</span>${chipRow('year',[['','All'],...ys.map(y=>[y,y])],S.year)}</div><div class="grp"><span class="gl">Quarter</span>${chipRow('quarter',[['','All'],['1','Q1'],['2','Q2'],['3','Q3'],['4','Q4']],S.quarter)}</div><div class="grp"><span class="gl">Month</span>${chipRow('month',[['','All'],...ms.map(m=>[m,MON[m]])],S.month)}</div><div class="grp"><span class="gl">Period</span>${chipRow('period',[['7','7 days'],['30','30 days'],['90','90 days'],['365','1 year'],['all','All']],S.period)}</div>`;
+ if(S.view==='load'&&S.site!=='all'){let I=info(S.site);if(!I.cats.includes(S.cat))S.cat=I.cats[0]||'';let ci=I.items.filter(i=>i.cat===S.cat);if(S.item!=='all'&&!ci.some(i=>i.name===S.item))S.item='all';
+  h+=`<div class="grp"><span class="gl">Resolution</span>${chipRow('res',[['auto','Auto'],['h','Hourly'],['d','Daily'],['m','Monthly']],S.res,'l')}</div><div class="grp"><span class="gl">Unit</span>${chipRow('unit',[['KW','kW'],['AMP','Ampere']],S.unit,'l')}</div><div class="grp"><span class="gl">Show</span>${chipRow('stat',[['avg','Average'],['max','Peak'],['min','Low']],S.stat,'l')}</div>
+  <div class="grp"><span class="gl">Equipment</span>${chipRow('cat',I.cats.map(c=>[c,c]),S.cat)}${ci.length>1?'<span class="sep"></span>'+chipRow('item',[['all','All'],...ci.map(i=>[i.name,i.name])],S.item,'l'):''}</div>`}
+ let fr=filt(rows);h+=`<div class="range">${fr.length?`${fr[0]._d} ${MON[fr[0]._m]} ${fr[0]._y} → ${fr[fr.length-1]._d} ${MON[fr[fr.length-1]._m]} ${fr[fr.length-1]._y} · ${fr.length.toLocaleString()} readings`:'No readings'}</div>`;$('filters').innerHTML=h}
+document.addEventListener('click',e=>{let b=e.target.closest('.chip');if(!b||!DATA)return;let k=b.parentNode.dataset.k;if(!k)return;S[k]=b.dataset.v;if(k==='cat')S.item='all';if(k==='site'){S.item='all';S.cat=''}if(k==='quarter'||k==='year'){S.month='';S.period='all'}if(k==='month'){S.quarter='';S.period='all'}render()});
+/* ---------- render ---------- */
+function card(id,title,cls=''){return `<div class="card ${cls}"><div class="ch"><h3>${title}</h3><div class="hr"></div></div><div class="cb ${cls.includes('t')?'t':''}" id="${id}"></div></div>`}
+function legend(arr){return arr.map(s=>`<span><i style="background:${s.color}"></i>${esc(s.name)}</span>`).join('')}
+function draw(list){$('charts').innerHTML=list.map((c,i)=>card(c.id,c.title,(c.cls||'')+(i%2?' g':'')).replace('class="card','style="animation-delay:'+i*30+'ms" class="card')).join('');list.forEach(c=>{try{c.fn($(c.id))}catch(e){console.error(c.id,e);$(c.id).innerHTML='<div class="nd">Chart unavailable</div>'}})}
+function kpiHTML(a){return a.filter(k=>k&&k.v!=null).map(k=>`<div class="kpi" title="${esc(k.l)}"><div><div class="kl">${esc(k.l)}</div><div class="kv">${fmt(k.v,k.d)}<small>${k.u||''}</small></div></div></div>`).join('')}
+function render(){if(!DATA)return;renderFilters();if(S.site==='all'){S.view==='fuel'?renderFuelOverview():renderLoadOverview();return}S.view==='fuel'?renderFuel():renderLoad()}
+const SN={avg:'Avg',max:'Peak',min:'Low'};
+function renderLoadOverview(){let sites=Object.keys(DATA.sites),stats=sites.map((site,i)=>{let I=info(site),rows=filt(prep(site)),tf=I.items.find(x=>x.cat==='Transformer')||I.items[0],equip=I.items.filter(x=>x.cat!=='Transformer');if(!equip.length)equip=I.items;let load=rows.map(r=>equip.map(x=>iv(x,r)).filter(v=>v!=null).reduce((a,v)=>a+v,0)).filter((v,j)=>equip.some(x=>iv(x,rows[j])!=null));return{site,color:PAL[i%PAL.length],transformer:tf?st(rows.map(r=>iv(tf,r)),S.stat):null,equipment:avg(load),pct:tf&&tf.pct?st(rows.map(r=>num(r[tf.pct])),S.stat)*100:null}}),avgTf=avg(stats.map(x=>x.transformer)),avgEq=avg(stats.map(x=>x.equipment));
+ $('kpis').innerHTML=kpiHTML([{l:'Locations',v:stats.length,d:0},{l:'Avg transformer load',v:avgTf,u:ul()},{l:'Avg equipment load',v:avgEq,u:ul()}]);
+ draw([{id:'ovLoadTf',title:'Transformer Load by Location',fn:el=>{setHR(el,`<span>${SN[S.stat]} · <b>${ul()}</b></span>`);hbars(el,stats.map(x=>({label:x.site,val:x.transformer,color:x.color})),{cols:true})}},{id:'ovEquipment',title:'Equipment Load',fn:el=>{setHR(el,`<span>average · <b>${ul()}</b></span>`);hbars(el,stats.map(x=>({label:x.site,val:x.equipment,color:x.color})),{cols:true})}},{id:'ovLoadPct',title:'Transformer Load by Location',fn:el=>{setHR(el,'<span>Load · %</span>');hbars(el,stats.map(x=>({label:x.site,val:x.pct,color:x.pct>80?P.pink:x.color})),{unit:'%',cols:true})}}])}
+function renderFuelOverview(){let all=filt(fuelRows()),allRows=fuelRows(),headers=Object.keys((DATA.fuelStatus||[])[0]||[]),hm={};headers.forEach(h=>hm[norm(h)]=h);let H=n=>hm[norm(n)]||n,stats=Object.keys(FUEL).map((site,i)=>{let [cap,dead,av,hr]=FUEL[site].map(H),row=all.slice().reverse().find(r=>num(r[av])!=null||num(r[hr])!=null||num(r[cap])!=null)||allRows.slice().reverse().find(r=>num(r[av])!=null||num(r[hr])!=null||num(r[cap])!=null)||{},capacity=num(row[cap]),available=num(row[av]);return{site,color:PAL[i%PAL.length],available,backup:num(row[hr]),level:capacity?available/capacity*100:null}}),meanLevel=avg(stats.map(x=>x.level)),totalFuel=stats.map(x=>x.available).filter(v=>v!=null).reduce((a,v)=>a+v,0);
+ $('kpis').innerHTML=kpiHTML([{l:'Locations',v:stats.length,d:0},{l:'Available fuel · all locations',v:totalFuel},{l:'Avg tank level',v:meanLevel,u:'%',d:1}]);
+ draw([{id:'ovFuel',title:'Available Fuel by Location',fn:el=>{setHR(el,'<span>latest reading</span>');hbars(el,stats.map(x=>({label:x.site,val:x.available,color:x.color})),{cols:true})}},{id:'ovBackup',title:'Backup Hours by Location',fn:el=>{setHR(el,'<span>latest reading</span>');hbars(el,stats.map(x=>({label:x.site,val:x.backup,color:x.color})),{unit:' h',cols:true})}},{id:'ovFuelLevel',title:'Tank Level by Location',fn:el=>{setHR(el,'<span>latest reading · %</span>');hbars(el,stats.map(x=>({label:x.site,val:x.level,color:x.level<25?P.pink:x.color})),{unit:'%',cols:true})}}])}
+function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),tf=I.items.find(i=>i.cat==='Transformer')||I.items[0];
+ let catItems=I.items.filter(i=>i.cat===S.cat),sel=(S.item==='all'?catItems:catItems.filter(i=>i.name===S.item)).slice(0,6);
+ const col=H=>I.items.length?PAL[Math.max(0,I.cats.indexOf(H))%PAL.length]:P.pink,gv=h=>r=>h?num(r[h]):null;
+ const isGrid=v=>v!=null&&String(v).trim()!==''&&!/dg|gen/i.test(String(v));
+ let tfv=tf?series(G,r=>iv(tf,r)):[],tfAll=tf?rows.map(r=>iv(tf,r)):[];
+ let tel=I.telco?series(G,gv(I.telco)):[],non=I.non?series(G,gv(I.non)):[],pue=I.pue?series(G,gv(I.pue)):[];
+ let telV=st(rows.map(gv(I.telco)),S.stat),nonV=st(rows.map(gv(I.non)),S.stat);
+ let gridS=I.src?G.g.map(g=>{let a=g.rows.map(r=>r[I.src]).filter(v=>v!=null&&String(v).trim()!=='');return a.length?a.filter(isGrid).length/a.length*100:null}):[];
+ let srcAll=I.src?rows.map(r=>r[I.src]).filter(v=>v!=null&&String(v).trim()!==''):[];
+ let kp=[];
+ if(tf)kp.push({l:`Transformer · ${SN[S.stat].toLowerCase()}`,v:st(tfAll,S.stat),u:ul(),s:tfv});
+ if(tf&&tf.pct)kp.push({l:'Transformer Load',v:(st(rows.map(gv(tf.pct)),S.stat)??NaN)*100||null,u:'%',s:series(G,gv(tf.pct)),d:1});
+ if(I.telco)kp.push({l:'Telco',v:telV,u:'kW',s:tel});
+ if(I.non)kp.push({l:'Non-telco',v:nonV,u:'kW',s:non});
+ if(I.telco&&I.non&&telV!=null&&nonV!=null)kp.push({l:'Telco share',v:telV/(telV+nonV)*100,u:'%',s:tel.map((t,i)=>t!=null&&non[i]!=null?t/(t+non[i])*100:null),d:1});
+ if(I.pue)kp.push({l:'PUE',v:st(rows.map(gv(I.pue)),S.stat),s:pue,d:2});
+ if(srcAll.length)kp.push({l:'On grid',v:srcAll.filter(isGrid).length/srcAll.length*100,u:'%',s:gridS,d:1});
+ if(tf&&tf.kw)kp.push({l:'Peak load',v:st(rows.map(r=>num(r[tf.kw])),'max'),u:'kW',s:series(G,r=>num(r[tf.kw]),'max')});
+ $('kpis').innerHTML=kpiHTML(kp);
+ let L=[],lab=G.g.map(g=>g.label),sh=G.g.map(g=>g.short);
+ if(sel.length)L.push({id:'cA',title:`${S.cat} trend`,cls:'c2 t',fn:el=>{let ss=sel.map((it,i)=>({name:it.name,color:PAL[i%PAL.length],vals:series(G,r=>iv(it,r))}));setHR(el,legend(ss.filter(s=>s.vals.some(v=>v!=null)))+`<span>${SN[S.stat]} · <b>${ul()}</b></span>`);lineChart(el,{series:ss,labels:lab,short:sh,area:ss.length===1,avgLine:ss.length===1,unit:ul()})}});
+ if(I.telco&&I.non)L.push({id:'cB',title:'Telco vs Non-telco',fn:el=>{let ss=[{name:'Telco',color:P.pink,vals:tel},{name:'Non-telco',color:P.lime,vals:non}];setHR(el,legend(ss));lineChart(el,{series:ss,labels:lab,short:sh,unit:'kW'})}});
+ if(I.pue)L.push({id:'cC',title:'PUE efficiency',fn:el=>{setHR(el,`<span>avg <b>${fmt(avg(pue),2)}</b></span>`);lineChart(el,{series:[{name:'PUE',color:P.plum,vals:pue}],labels:lab,short:sh,area:true,avgLine:true})}});
+ let rk=I.items.filter(it=>it.cat!=='Transformer').map(it=>{let v=rows.map(r=>iv(it,r));return{label:it.name,val:avg(v),min:st(v,'min'),max:st(v,'max'),color:col(it.cat),dot:null}}).filter(x=>x.val!=null).sort((a,b)=>b.val-a.val);
+ L.push({id:'cE',title:'Equipment ranking',cls:'c2',fn:el=>{setHR(el,`<span>avg · light band = peak · <b>${ul()}</b></span>`);el.style.height=Math.max(96,Math.ceil(rk.length/2)*18+6)+'px';hbars(el,rk,{cols:true})}});
+ let pr=I.items.filter(i=>i.pct).map(it=>({label:it.name,val:(avg(rows.map(r=>num(r[it.pct])))??NaN)*100,color:col(it.cat)})).filter(x=>isFinite(x.val)).sort((a,b)=>b.val-a.val);
+ if(pr.length)L.push({id:'cF',title:'Equipment Load',fn:el=>{setHR(el,'<span>avg load %</span>');hbars(el,pr.map(x=>({...x,color:x.val>80?P.pink:x.color})),{unit:'%',cols:true})}});
+ if(srcAll.length)L.push({id:'cJ',title:'Grid vs generator',fn:el=>{let g=srcAll.filter(isGrid).length;donut(el,{items:[{label:'Grid',val:g,color:P.lime},{label:'Generator',val:srcAll.length-g,color:P.pink}],big:fmt(g/srcAll.length*100,0)+'%',small:'on grid'})}});
+ if(tf)L.push({id:'cH',title:'Daily load profile',fn:el=>{let by={};rows.forEach(r=>{let v=iv(tf,r);if(v!=null)(by[r._h]=by[r._h]||[]).push(v)});let it=Object.keys(by).map(Number).sort((a,b)=>a-b).map(h=>({label:String(h).padStart(2,'0')+':00',short:h+'h',val:avg(by[h]),color:P.lime}));let pk=it.reduce((a,b)=>b.val>a.val?b:a,it[0]||{val:0});it.forEach(x=>{if(x===pk)x.color=P.pink});setHR(el,it.length?`<span>peak <b>${pk.label}</b></span>`:'');barChart(el,{items:it,zoom:true})}});
+ if(tf)L.push({id:'cI',title:'Monthly average',fn:el=>{let all=filt(prep(S.site),false,false),by=new Map();all.forEach(r=>{let v=iv(tf,r),k=r._y*12+r._m;if(v!=null){if(!by.has(k))by.set(k,[]);by.get(k).push(v)}});let it=[...by.entries()].sort((a,b)=>a[0]-b[0]).slice(-12).map(([k,a])=>({label:MON[k%12]+' '+Math.floor(k/12),short:MON[k%12],val:avg(a),color:P.pink}));setHR(el,`<span><b>${ul()}</b></span>`);barChart(el,{items:it,zoom:true})}});
+ if(tf)L.push({id:'cW',title:'Weekly pattern',fn:el=>{let by={};rows.forEach(r=>{let v=iv(tf,r);if(v!=null){let d=new Date(r._t).getUTCDay();(by[d]=by[d]||[]).push(v)}});let nm=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],it=[1,2,3,4,5,6,0].filter(d=>by[d]).map(d=>({label:nm[d],val:avg(by[d]),color:P.plum}));setHR(el,`<span><b>${ul()}</b></span>`);barChart(el,{items:it,zoom:true})}});
+ if(I.phases.length===3)L.push({id:'cG',title:'Phase currents',fn:el=>{let ss=I.phases.map((h,i)=>({name:'L'+(i+1),color:[P.pink,P.lime,P.plum][i],vals:series(G,gv(h))}));setHR(el,legend(ss));lineChart(el,{series:ss,labels:lab,short:sh,unit:'A'})}});
+ if(I.volt.length===3)L.push({id:'cK',title:'Supply voltage',fn:el=>{let ss=I.volt.map((h,i)=>({name:'L'+(i+1),color:[P.pink,P.lime,P.plum][i],vals:series(G,gv(h))}));setHR(el,legend(ss));lineChart(el,{series:ss,labels:lab,short:sh,unit:'V'})}});
+ if(tf&&tf.pct)L.push({id:'cT',title:'Transformer Load',fn:el=>{let v=series(G,gv(tf.pct)).map(x=>x==null?null:x*100);setHR(el,'<span>% · limit 80</span>');lineChart(el,{series:[{name:'Load',color:P.amber,vals:v}],labels:lab,short:sh,area:true,ref:80,min0:true,unit:'%'})}});
+ if(I.temps.length)L.push({id:'cL',title:'Room temperature',fn:el=>{setHR(el,'<span>avg °C</span>');hbars(el,I.temps.map(t=>{let v=avg(rows.flatMap(r=>t.hs.map(h=>num(r[h]))).filter(x=>x!=null&&x>0&&x<80));return{label:t.name,val:v,color:v>27?P.pink:P.lime}}),{unit:'°'})}});
+ if(I.telco&&I.non)L.push({id:'cD',title:'Load mix',fn:el=>donut(el,{items:[{label:'Telco',val:telV,color:P.pink},{label:'Non-telco',val:nonV,color:P.lime}],big:fmt(telV/(telV+nonV)*100,0)+'%',small:'telco'})});
+ draw(L)}
+function renderFuel(){let site=S.site,F=FUEL[site];if(!F){$('kpis').innerHTML='';$('charts').innerHTML='<div class="card"><div class="nd" style="height:90px">No fuel data for this site</div></div>';return}
+ let all=fuelRows(),hm={};all.length&&Object.keys(DATA.fuelStatus[0]||{}).forEach(h=>hm[norm(h)]=h);const H=n=>hm[norm(n)]||n;
+ let [cap,dead,av,hr]=F.map(H),rows=filt(all),G=groups(rows),last=rows[rows.length-1]||{},lab=G.g.map(g=>g.label),sh=G.g.map(g=>g.short);
+ let avS=series(G,r=>num(r[av])),hrS=series(G,r=>num(r[hr])),capV=num(last[cap]),avV=num(last[av]);
+ let diffs=[];for(let i=1;i<avS.length;i++)diffs.push(avS[i]!=null&&avS[i-1]!=null?avS[i]-avS[i-1]:null);
+ let use=diffs.filter(d=>d!=null&&d<0),refills=diffs.filter(d=>d!=null&&capV&&d>capV*.05).length;
+ $('kpis').innerHTML=kpiHTML([{l:'Fuel now',v:avV,s:avS},{l:'Fuel level',v:capV?avV/capV*100:null,u:'%',d:1,s:avS.map(v=>v!=null&&capV?v/capV*100:null)},{l:'Backup time',v:num(last[hr]),u:'hrs',d:1,s:hrS},{l:'Tank capacity',v:capV},{l:'Dead fuel',v:num(last[dead])},{l:'Daily use',v:use.length?-avg(use):null,s:diffs.map(d=>d!=null&&d<0?-d:null)},{l:'Refills',v:refills,d:0},...fuelDetailStats(site)]);
+ let L=[{id:'fA',title:'Available fuel',cls:'c2 t',fn:el=>{setHR(el,`<span>latest <b>${fmt(avV)}</b></span>`);lineChart(el,{series:[{name:'Available',color:P.pink,vals:avS}],labels:lab,short:sh,area:true,avgLine:true})}},
+ {id:'fB',title:'Backup hours',fn:el=>{setHR(el,`<span>now <b>${fmt(num(last[hr]),1)} h</b></span>`);lineChart(el,{series:[{name:'Backup',color:P.lime,vals:hrS}],labels:lab,short:sh,area:true,unit:'h'})}},
+ {id:'fC',title:'Tank level',fn:el=>{let p=capV?avV/capV:0;donut(el,{items:[{label:'Fuel',val:Math.max(0,avV||0),color:p<.25?P.pink:P.lime},{label:'Empty space',val:Math.max(0,(capV||0)-(avV||0)),color:'#efe3ea'}],big:fmt(p*100,0)+'%',small:'full'})}},
+ {id:'fD',title:'Daily change',cls:'c2',fn:el=>{setHR(el,'<span><i style="background:#7dbb2f"></i>refill <i style="background:#e6007e;margin-left:6px"></i>used</span>');barChart(el,{items:diffs.map((d,i)=>({label:lab[i+1],short:sh[i+1],val:d,color:d>=0?P.lime:P.pink}))})}}];
+ let lastAll=all[all.length-1]||{},sites=Object.keys(FUEL).map(s=>{let f=FUEL[s].map(H);return{s,hrs:num(lastAll[f[3]]),pct:num(lastAll[f[2]])/num(lastAll[f[0]])*100}});
+ L.push({id:'fG',title:'Fuel used (cumulative)',cls:'c2',fn:el=>{let c=0,v=diffs.map(d=>{if(d!=null&&d<0)c-=d;return c});setHR(el,`<span>total <b>${fmt(c)}</b></span>`);lineChart(el,{series:[{name:'Used',color:P.plum,vals:v}],labels:lab.slice(1),short:sh.slice(1),area:true,min0:true})}},
+ {id:'fE',title:'Backup hours by site',fn:el=>{setHR(el,'<span>latest</span>');hbars(el,sites.map(x=>({label:x.s,val:x.hrs,color:x.s===site?P.pink:P.lime})),{unit:' h'})}},
+ {id:'fF',title:'Tank level by site',fn:el=>{setHR(el,'<span>latest</span>');hbars(el,sites.map(x=>({label:x.s,val:x.pct,color:x.s===site?P.pink:P.lime})),{unit:'%'})}});
+ draw(L)}
+/* ---------- init / io ---------- */
+function toast(m){let t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+function init(){}
+const tip=$('tip');
+document.addEventListener('mousemove',e=>{let t=e.target.closest&&e.target.closest('[data-tip]');if(!t||!t.getAttribute('data-tip')){tip.style.opacity=0;return}tip.innerHTML=t.getAttribute('data-tip');tip.style.opacity=1;tip.style.left=Math.max(60,Math.min(innerWidth-60,e.clientX))+'px';tip.style.top=e.clientY+'px'});
+document.addEventListener('mouseleave',()=>tip.style.opacity=0);
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>DATA&&render(),160)});
+$('exportBtn').addEventListener('click',()=>{if(!DATA)return;let rows,hs;if(S.view==='fuel'){rows=filt(fuelRows());hs=Object.keys((DATA.fuelStatus||[])[0]||{})}else if(S.site==='all'){let all=[];hs=['Location',...new Set(Object.values(DATA.sites).flatMap(s=>s.headers))];for(const site of Object.keys(DATA.sites))all.push(...filt(prep(site)).map(r=>Object.assign({Location:site},r)));rows=all}else{rows=filt(prep(S.site));hs=DATA.sites[S.site].headers}
+ let q=v=>'"'+String(v??'').replace(/"/g,'""')+'"',csv=[hs.map(q).join(',')].concat(rows.map(r=>hs.map(h=>q(h==='Location'?r.Location:r[h])).join(','))).join('\r\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download=(S.site==='all'?'all_locations':S.site)+(S.view==='fuel'?'_fuel':'_filtered')+'.csv';a.click();URL.revokeObjectURL(a.href)});
+let XLSX_PROMISE=null; async function ensureXLSX(){if(window.XLSX)return;if(!XLSX_PROMISE)XLSX_PROMISE=new Promise((resolve,reject)=>{let s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';s.onload=resolve;s.onerror=()=>reject(Error('Could not load the workbook reader.'));document.head.appendChild(s)});await XLSX_PROMISE}
+async function applyWorkbook(file,name,notify){await ensureXLSX();let book=XLSX.read(await file.arrayBuffer(),{type:'array',cellDates:true}),next={sites:{},fuelStatus:[],fuelSheets:{}};
+ for(let s of ['Korangi','Dalmia','Hyderabad','Quetta']){if(!book.Sheets[s])continue;let rows=XLSX.utils.sheet_to_json(book.Sheets[s],{defval:null,raw:false});next.sites[s]={headers:rows.length?Object.keys(rows[0]):[],rows}}
+ if(book.Sheets['Fuel Status'])next.fuelStatus=XLSX.utils.sheet_to_json(book.Sheets['Fuel Status'],{defval:null,raw:false});
+ for(const name of book.SheetNames){if(/fuel/i.test(name)&&!/^fuel status$/i.test(name)){const ws=book.Sheets[name];const rows=XLSX.utils.sheet_to_json(ws,{defval:null,raw:false});next.fuelSheets[name]={headers:rows.length?Object.keys(rows[0]):[],rows};}}
+ if(!Object.keys(next.sites).length)throw Error('Could not find Korangi, Dalmia, Hyderabad or Quetta sheets.');applyDashboardData(next,name,notify)} function applyDashboardData(data,name,notify){if(!data||!data.sites||!Object.keys(data.sites).length)throw Error('Demo data does not contain site data.');DATA=data;S.year='';S.month='';S.quarter='';for(const s of Object.values(DATA.sites)){delete s._p;delete s._info;}delete DATA._fp;render();if(notify)toast('Loaded '+name)}
+$('fileInput').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{await applyWorkbook(f,f.name,true)}catch(err){console.error('Could not load workbook:',err);toast('Could not load workbook: '+err.message)}e.target.value=''});
+async function refreshSharePointWorkbook(){return window.refreshSharePointWorkbook(applyWorkbook,toast)}init();refreshSharePointWorkbook();setInterval(refreshSharePointWorkbook,3000);
+</script></body></html>
