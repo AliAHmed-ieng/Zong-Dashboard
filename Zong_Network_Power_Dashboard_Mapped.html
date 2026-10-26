@@ -155,7 +155,7 @@ function detailFuelRows(site){
  for(const name of cfg.sheets){const sh=Object.keys(DATA.fuelSheets).find(k=>norm(k)===norm(name));if(!sh)continue;
   const src=DATA.fuelSheets[sh]||{},headers=src.headers||[],hm=headerMap(headers);
   for(const original of (src.rows||[])){const r={...original,_fuelSheet:sh};
-   let dh=getHeader(headers,['Date']);if(dh&&r[dh]!=null){const dt=new Date(r[dh]);if(!isNaN(dt)){r.Year=dt.getFullYear();r.Month=MON[dt.getMonth()];}}
+   let dh=getHeader(headers,['Date']),yh=getHeader(headers,['Year']),mh=getHeader(headers,['Month']);if(dh&&r[dh]!=null){const dt=new Date(r[dh]);if(!isNaN(dt)){if(!yh||r[yh]==null||r[yh]==='')r.Year=dt.getFullYear();if(!mh||r[mh]==null||r[mh]==='')r.Month=MON[dt.getMonth()];}}
    r._consumeHeader=getHeader(headers,cfg.consume);
    r._dgFuelHeaders=cfg.dgFuel.map(n=>getHeader(headers,[n])).filter(Boolean);
    r._dgHourHeaders=cfg.hours.map(n=>getHeader(headers,[n])).filter(Boolean);
