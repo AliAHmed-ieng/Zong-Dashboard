@@ -2,10 +2,10 @@
   'use strict';
 
   const config = window.ZONG_DASHBOARD_CONFIG;
-  const RELEASE_CHECK_INTERVAL_MS = 70_000;
+  const RELEASE_CHECK_INTERVAL_MS = 30_000;
   const DEPLOYMENT_GRACE_PERIOD_MS = 90_000;
   const FETCH_TIMEOUT_MS = 15_000;
-  let currentWorkbookVersion = '';
+  let currentWorkbookVersion = localStorage.getItem('zongdash-tag') || '';
   let pendingWorkbookVersion = '';
   let pendingWorkbookReadyAt = 0;
   let lastReleaseCheck = 0;
@@ -89,33 +89,43 @@
         }
       }
 
-      if (!pendingWorkbookVersion) return;
-      const release = {
-        tag: pendingWorkbookVersion,
-        readyAt: pendingWorkbookReadyAt
-      };
-      if (Date.now() < release.readyAt) {
-        setLoadingStatus('Waiting for the new release to finish deploying...');
+      if (!pendingWorkbookVersion) {
+        if (!DATA) setLoadingStatus('Could not reach release API (rate limit?). Retrying shortly...');
+        else setLoadingStatus('');
         return;
       }
 
-      const workbookUrl = new URL(config.backendPath + encodeURIComponent(release.tag) + '.xlsm', document.baseURI);
-      workbookUrl.searchParams.set('retry', String(Math.floor(Date.now() / 1000)));
-      setLoadingStatus('Downloading backend workbook (~45 MB)...');
-      const response = await timeoutFetch(workbookUrl.href, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Could not download the workbook for release ' + release.tag + ' (' + response.status + ').');
+      const tag = pendingWorkbookVersion;
+      const workbookUrl = new URL(config.backendPath + encodeURIComponent(tag) + '.xlsm', document.baseURI);
+      let response = null;
+      for (let attempt = 1; attempt <= 15; attempt++) {
+        workbookUrl.searchParams.set('retry', String(Math.floor(Date.now() / 1000)));
+        setLoadingStatus('Downloading backend workbook ' + tag + ' (attempt ' + attempt + ')...');
+        response = await timeoutFetch(workbookUrl.href, { cache: 'no-store' });
+        if (response.ok) break;
+        if (response.status === 404) {
+          setLoadingStatus('Waiting for deployment to finish... (attempt ' + attempt + '/15)');
+          await new Promise(r => setTimeout(r, 5000));
+          continue;
+        }
+        throw new Error('Could not download the workbook for release ' + tag + ' (' + response.status + ').');
+      }
+      if (!response || !response.ok) throw new Error('Workbook not available after retries for ' + tag + '.');
+
       const workbook = await response.blob();
       setLoadingStatus('Reading workbook data...');
       await applyWorkbook(workbook, 'Backend.xlsm', false);
-      currentWorkbookVersion = release.tag;
+      currentWorkbookVersion = tag;
+      localStorage.setItem('zongdash-tag', tag);
       pendingWorkbookVersion = '';
-      pendingWorkbookReadyAt = 0;
       lastError = '';
-      toast('Dashboard updated from release ' + release.tag);
+      setLoadingStatus('');
+      toast('Dashboard updated from release ' + tag);
     } catch (error) {
-      // Any backend failure (timeout, 403, 404, network) silently falls back to
-      // the static snapshot already loaded at init. No error toast is shown.
-      console.warn('Backend workbook unavailable, using static snapshot:', error.message);
+      // Backend failures (timeout, 403, 404, network, parse errors) fall back to
+      // the cached/static snapshot. Surface the reason so it is not silent.
+      console.error('Backend workbook unavailable, using cached/static snapshot:', error);
+      reportError(error, toast);
       setLoadingStatus('');
     } finally {
       refreshBusy = false;
