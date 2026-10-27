@@ -472,5 +472,5 @@ function applyDashboardData(data,name,notify){if(!data||!data.sites||!Object.key
 let staticBusy=false,staticTries=0;
 async function loadStaticSnapshot(){if(DATA||staticBusy||staticTries>=3)return;staticBusy=true;staticTries++;try{const res=await fetch('./demo-data.json.gz',{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const text=await new Response(res.body.pipeThrough(new DecompressionStream('gzip'))).text();applyDashboardData(JSON.parse(text),'dashboard snapshot',false)}catch(err){console.error('Static snapshot load failed:',err)}finally{staticBusy=false}}
 function refreshOrFallback(){window.refreshGitHubWorkbook(applyWorkbook,toast).then(()=>{if(!DATA)loadStaticSnapshot()},()=>{if(!DATA)loadStaticSnapshot()})}
-init();refreshOrFallback();setInterval(refreshOrFallback,5000);
+init();loadStaticSnapshot();refreshOrFallback();setInterval(refreshOrFallback,5000);
 </script></body></html>

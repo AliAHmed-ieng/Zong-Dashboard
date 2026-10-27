@@ -4,6 +4,7 @@
   const config = window.ZONG_DASHBOARD_CONFIG;
   const RELEASE_CHECK_INTERVAL_MS = 70_000;
   const DEPLOYMENT_GRACE_PERIOD_MS = 90_000;
+  const FETCH_TIMEOUT_MS = 15_000;
   let currentWorkbookVersion = '';
   let pendingWorkbookVersion = '';
   let pendingWorkbookReadyAt = 0;
@@ -27,17 +28,29 @@
     if (status) status.textContent = message;
   }
 
+  function timeoutFetch(url, init) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    return fetch(url, { ...init, signal: controller.signal }).then(function (response) {
+      clearTimeout(timer);
+      return response;
+    }, function (error) {
+      clearTimeout(timer);
+      throw error;
+    });
+  }
+
   async function getLatestRelease() {
     const now = Date.now();
     if (now - lastReleaseCheck < RELEASE_CHECK_INTERVAL_MS) return null;
     lastReleaseCheck = now;
-    const response = await fetch(config.latestReleaseApiUrl, {
+    const response = await timeoutFetch(config.latestReleaseApiUrl, {
       headers: { Accept: 'application/vnd.github+json' },
       cache: 'no-store'
     });
     if (!response.ok) {
       // Anonymous access from GitHub Pages may be rate-limited (403) or lack
-      // permission to read the releases API. That is expected for the public demo:
+      // permission to read the releases API. Expected for the public demo:
       // fall back to the static snapshot instead of surfacing an error toast.
       console.warn('Could not check for workbook releases (status ' + response.status + '); using static snapshot.');
       return null;
@@ -89,7 +102,7 @@
       const workbookUrl = new URL(config.backendPath + encodeURIComponent(release.tag) + '.xlsm', document.baseURI);
       workbookUrl.searchParams.set('retry', String(Math.floor(Date.now() / 1000)));
       setLoadingStatus('Downloading backend workbook (~45 MB)...');
-      const response = await fetch(workbookUrl.href, { cache: 'no-store' });
+      const response = await timeoutFetch(workbookUrl.href, { cache: 'no-store' });
       if (!response.ok) throw new Error('Could not download the workbook for release ' + release.tag + ' (' + response.status + ').');
       const workbook = await response.blob();
       setLoadingStatus('Reading workbook data...');
@@ -100,9 +113,13 @@
       lastError = '';
       toast('Dashboard updated from release ' + release.tag);
     } catch (error) {
-      reportError(error, toast);
+      // Any backend failure (timeout, 403, 404, network) silently falls back to
+      // the static snapshot already loaded at init. No error toast is shown.
+      console.warn('Backend workbook unavailable, using static snapshot:', error.message);
+      setLoadingStatus('');
     } finally {
       refreshBusy = false;
     }
   };
+
 })();
