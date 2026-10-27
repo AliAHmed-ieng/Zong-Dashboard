@@ -5,7 +5,7 @@ button{font:inherit;cursor:pointer}
 /* header */
 header{background:linear-gradient(100deg,#cf006c,#e6007e 50%,#f2379c);color:#fff;position:relative;overflow:hidden}
 header:after{content:"";position:absolute;right:-50px;top:0;bottom:0;width:min(46%,560px);background:var(--lime);transform:skewX(-25deg);box-shadow:-14px 0 0 -4px #ffffff40}
-.hin{position:relative;z-index:1;max-width:1700px;margin:auto;padding:9px 16px;display:flex;align-items:center;gap:16px}
+.hin{position:relative;z-index:1;max-width:none;width:100%;margin:0;padding:9px 16px;display:flex;align-items:center;gap:16px}
 .logo{display:flex;align-items:center;gap:9px}
 .wm{font-weight:900;font-size:22px;letter-spacing:1px;font-style:italic}
 .wm i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--lime);margin-left:3px;box-shadow:0 0 0 2px #fff6}
@@ -20,7 +20,7 @@ header:after{content:"";position:absolute;right:-50px;top:0;bottom:0;width:min(4
 .ib{display:inline-flex;align-items:center;gap:5px;border:0;background:#ffffffb3;color:var(--plum);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700}
 .ib:hover{background:#fff}
 /* layout */
-main{max-width:1700px;margin:auto;padding:10px 16px 18px}
+main{width:100%;padding:10px 16px 18px}
 .chip{border:1px solid #e3d2dc;background:#fff;color:#5a4654;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:650;white-space:nowrap;transition:background .12s,color .12s,transform .12s}
 .chip:hover{transform:translateY(-1px);border-color:var(--pink)}
 .chip.on{background:var(--pink);border-color:var(--pink);color:#fff}
@@ -106,7 +106,7 @@ main{max-width:1700px;margin:auto;padding:10px 16px 18px}
 </style></head><body><div class="tip" id="tip"></div>
 <header><div class="hin"><div class="logo"><div class="wm">ZONG<i></i></div><div class="ttl"><b>Network &amp; Power Intelligence</b><span>Engineering South</span></div></div>
 <div class="hs" id="sites"></div>
-<div class="hr2"><div class="hv" id="views"></div></div></div></header>
+<div class="hr2"><button class="ib" id="fsBtn" type="button" title="Toggle fullscreen">Fullscreen</button><div class="hv" id="views"></div></div></div></header>
 <main><section class="fbar" id="filters"></section><section class="kpis" id="kpis"></section><section class="charts" id="charts"><div class="card"><div class="nd" style="height:120px">Loading data…</div></div></section></main>
 <script src="./dashboard-config.js"></script><script src="./github-pages-data.js"></script><script>
 let DATA=null;const $=id=>document.getElementById(id);
@@ -475,5 +475,6 @@ function applyDashboardData(data,name,notify){if(!data||!data.sites||!Object.key
 let staticBusy=false,staticTries=0;
 async function loadStaticSnapshot(){if(DATA||staticBusy||staticTries>=3)return;staticBusy=true;staticTries++;try{const res=await fetch('./demo-data.json.gz',{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const text=await new Response(res.body.pipeThrough(new DecompressionStream('gzip'))).text();applyDashboardData(JSON.parse(text),'dashboard snapshot',false)}catch(err){console.error('Static snapshot load failed:',err)}finally{staticBusy=false}}
 function refreshOrFallback(){window.refreshGitHubWorkbook(applyWorkbook,toast).then(()=>{if(!DATA)loadStaticSnapshot()},()=>{if(!DATA)loadStaticSnapshot()})}
-init();(async()=>{const c=await loadCachedData();if(c&&!DATA){try{applyDashboardData(c,'cached snapshot',false)}catch(e){}}refreshOrFallback();setInterval(refreshOrFallback,5000)})();
+function toggleFullscreen(){const el=document.documentElement;if(!document.fullscreenElement){(el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen).call(el).catch(()=>{})}else{(document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen).call(document)}}function updateFsBtn(){const b=document.getElementById('fsBtn');if(b)b.textContent=document.fullscreenElement?'Exit Fullscreen':'Fullscreen'}document.addEventListener('fullscreenchange',updateFsBtn);document.addEventListener('webkitfullscreenchange',updateFsBtn);const _fsBtn=document.getElementById('fsBtn');if(_fsBtn)_fsBtn.addEventListener('click',toggleFullscreen);try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}document.addEventListener('click',function fsOnce(){try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}document.removeEventListener('click',fsOnce)},{once:true});
+init();(async()=>{let latest=null;try{latest=await window.getLatestRelease()}catch(e){}const cachedTag=localStorage.getItem('zongdash-tag')||'';const cachedData=await loadCachedData();const hasNewer=!!(latest&&latest.tag&&latest.tag!==cachedTag);if(cachedData&&!hasNewer){try{applyDashboardData(cachedData,'cached snapshot',false)}catch(e){}}const rf=()=>window.refreshGitHubWorkbook(applyWorkbook,toast,latest);rf();setInterval(rf,5000)})();
 </script></body></html>

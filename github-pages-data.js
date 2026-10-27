@@ -66,7 +66,7 @@
     };
   }
 
-  window.refreshGitHubWorkbook = async function (applyWorkbook, toast) {
+  window.refreshGitHubWorkbook = async function (applyWorkbook, toast, latestReleaseOverride) {
     if (refreshBusy) return;
     refreshBusy = true;
     try {
@@ -75,7 +75,7 @@
         throw new Error('Set the release API URL and backend path in dashboard-config.js.');
       }
 
-      const latestRelease = await getLatestRelease();
+      const latestRelease = (latestReleaseOverride !== undefined && latestReleaseOverride !== null) ? latestReleaseOverride : await getLatestRelease();
       if (latestRelease) {
         if (latestRelease.tag === currentWorkbookVersion) {
           pendingWorkbookVersion = '';
@@ -132,4 +132,5 @@
     }
   };
 
+  window.getLatestRelease = getLatestRelease;
 })();
