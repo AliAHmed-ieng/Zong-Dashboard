@@ -41,7 +41,7 @@ main{max-width:1700px;margin:auto;padding:10px 16px 18px}
 /* charts */
 .charts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;grid-auto-flow:dense}
 .card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--pink);border-radius:9px;padding:6px 8px 4px;box-shadow:0 1px 3px #3a0f2e10;min-width:0;animation:up .4s both}
-.card.g{border-top-color:var(--lime)}.c2{grid-column:span 1}
+.card.g{border-top-color:var(--lime)}.c2{grid-column:span 1}.card.wide{grid-column:span 2}.card.wide .cb{height:auto}
 .ch{display:flex;justify-content:space-between;align-items:baseline;gap:8px;min-height:17px}
 .ch h3{margin:0;font-size:11px;font-weight:780;white-space:nowrap}
 .hr{font-size:10px;color:var(--muted);display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;font-weight:600}
@@ -68,10 +68,10 @@ main{max-width:1700px;margin:auto;padding:10px 16px 18px}
 .dbig{font-size:19px;font-weight:850;fill:var(--ink)}.dsm{font-size:9px;fill:#9a8793;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
 .dl{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;font-size:11px}
 .dl div{display:flex;align-items:center;gap:6px}.dl i{width:9px;height:9px;border-radius:3px;flex:none}.dl span{flex:1;color:#6a5663;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dl b{font-variant-numeric:tabular-nums}
-.table-card .cb{height:auto;max-height:320px;overflow:auto}.table-wrap{width:100%;overflow:auto}
-.data-table{width:100%;border-collapse:collapse;font-size:10px;font-variant-numeric:tabular-nums}
-.data-table th{position:sticky;top:0;background:#f8f2f6;color:#604c5a;text-align:left;font-size:9px;letter-spacing:.35px;text-transform:uppercase;z-index:1}
-.data-table th,.data-table td{padding:5px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+.table-card{overflow:hidden}.table-card .cb{height:auto;max-height:none;overflow:visible}.table-wrap{width:100%;max-width:100%;overflow:visible}
+.data-table{width:100%;max-width:100%;border-collapse:collapse;font-size:10px;font-variant-numeric:tabular-nums}
+.data-table th{position:sticky;top:0;background:#f8f2f6;color:#604c5a;text-align:left;font-size:9px;letter-spacing:.35px;text-transform:uppercase;z-index:1;white-space:normal;line-height:1.15;vertical-align:bottom}
+.data-table th,.data-table td{padding:4px 5px;border-bottom:1px solid var(--line);white-space:nowrap}.data-table th{white-space:normal;overflow-wrap:anywhere}.data-table th:first-child,.data-table td:first-child{min-width:52px}.data-table.fit{table-layout:fixed;font-size:9.5px}.data-table.fit th,.data-table.fit td{padding:3px 4px}.data-table.fit th:first-child,.data-table.fit td:first-child{width:31%;min-width:0}.data-table.fit td{overflow-wrap:anywhere}.data-table.fit td:first-child{white-space:normal;line-height:1.15}.temp-table{border-collapse:separate;border-spacing:0;font-size:10.5px}.temp-table thead th{background:#f9eef5;color:#8a5a75;text-align:center;padding:5px 3px;border-bottom:1px solid #eed8e6;letter-spacing:.6px}.temp-table thead th:first-child{text-align:left;padding-left:7px;border-top-left-radius:7px}.temp-table thead th:last-child{border-top-right-radius:7px}.temp-table tbody td{text-align:center;padding:5px 3px;border-bottom:1px solid #f5e9f0;font-variant-numeric:tabular-nums;font-weight:650;color:#3a0f2e;white-space:nowrap}.temp-table tbody td:first-child{text-align:left;padding-left:7px;font-weight:650;color:#6a5663;font-size:10px;white-space:normal;line-height:1.15}.temp-table tbody tr:nth-child(even) td{background:#fdf7fb}.temp-table tbody tr:hover td{background:#fbeaf4}.temp-table tbody tr:last-child td:first-child{border-bottom-left-radius:7px}.temp-table tbody tr:last-child td:last-child{border-bottom-right-radius:7px}.temp-table tbody td.na{color:#d3c2cc;font-weight:400}.temp-table tbody td:not(:first-child){text-align:center}
 .data-table tbody tr:nth-child(even){background:#fcf9fb}
 .data-table td:not(:first-child){text-align:right}
 .tip{position:fixed;z-index:60;pointer-events:none;background:var(--plum);color:#fff;border-radius:8px;padding:6px 9px;font-size:11px;box-shadow:0 8px 20px #3a0f2e55;opacity:0;transition:opacity .08s;transform:translate(-50%,-125%);white-space:nowrap;line-height:1.4}
@@ -81,11 +81,18 @@ main{max-width:1700px;margin:auto;padding:10px 16px 18px}
 @keyframes dr{to{stroke-dashoffset:0}}
 @keyframes gv{from{transform:scaleY(0)}}@keyframes gh{from{transform:scaleX(0)}}
 @media(max-width:1200px){.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:1000px){.charts{grid-template-columns:repeat(2,minmax(0,1fr))}header:after{display:none}.hin{flex-wrap:wrap}.hr2{margin-left:0}.hr2,.hs{color:#fff}}
-@media(max-width:600px){.charts{grid-template-columns:1fr}.c2{grid-column:span 1}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.hbl{columns:1}.ttl{display:none}.range{margin-left:0}.hr2 .ib span{display:none}}
+@media(max-width:1000px){.charts{grid-template-columns:repeat(2,minmax(0,1fr))}.card.wide{grid-column:span 1}header:after{display:none}.hin{flex-wrap:wrap}.hr2{margin-left:0}.hr2,.hs{color:#fff}}
+@media(max-width:600px){.charts{grid-template-columns:1fr}.c2{grid-column:span 1}.card.wide{grid-column:span 1}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.hbl{columns:1}.ttl{display:none}.range{margin-left:0}.hr2 .ib span{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}.ln{stroke-dashoffset:0}}
 .cb .dn svg{width:auto;height:auto;flex:none}.kl{font-size:9px;letter-spacing:.5px}
-.few .hb{height:30px}
+.few .hb{height:28px}
+/* thematic in-card selectors */
+.hsel{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.hsel select{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:99px;padding:1px 18px 1px 7px;font:inherit;font-size:10px;font-weight:700;letter-spacing:0;text-transform:none;max-width:132px;cursor:pointer;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--pink) 50%),linear-gradient(135deg,var(--pink) 50%,transparent 50%);background-position:calc(100% - 9px) 52%,calc(100% - 5px) 52%;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
+.hsel select:hover{border-color:var(--pink)}
+.hsel select:focus{outline:2px solid #e6007e33;outline-offset:1px}
+.data-table.matrix td{text-align:right}.data-table.matrix td:first-child{text-align:left}
+.data-table.matrix tbody tr:hover{background:#fdf3f8}
 </style></head><body><div class="tip" id="tip"></div>
 <header><div class="hin"><div class="logo"><div class="wm">ZONG<i></i></div><div class="ttl"><b>Network &amp; Power Intelligence</b><span>Engineering South</span></div></div>
 <div class="hs" id="sites"></div>
@@ -96,7 +103,7 @@ let DATA=null;const $=id=>document.getElementById(id);
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const P={pink:'#e6007e',lime:'#7dbb2f',plum:'#5b1e4f',amber:'#f0a30a',slate:'#5f7080',rose:'#ff7ac0'};
 const PAL=[P.pink,P.lime,P.plum,P.amber,P.slate,P.rose];
-let S={site:'Korangi',view:'load',year:'',month:'',quarter:'',period:'30',res:'auto',unit:'KW',stat:'avg',cat:'',item:'all'};
+let S={site:'Korangi',view:'load',year:'',month:'',quarter:'',period:'30',res:'auto',unit:'KW',stat:'avg',cat:'',item:'all',temp:'',lsSite:''};
 const norm=s=>String(s).toLowerCase().replace(/\s+/g,' ').trim();
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function num(v){if(v==null||v===''||typeof v==='boolean')return null;if(typeof v==='number')return isFinite(v)?v:null;let s=String(v).trim().replace(/,/g,''),pc=s.endsWith('%');if(pc)s=s.slice(0,-1);if(s==='')return null;let n=Number(s);return isFinite(n)?(pc?n/100:n):null}
@@ -148,10 +155,10 @@ Quetta:{src:'Power status',volt:L3('CP-V-L'),pue:'PUE',telco:'Telco Load KW',non
 const FUEL={Korangi:['KKMSC Fuel Capacity','KKMSC Dead fuel','KKMSC available Fuel','KKMSC Backup Hrs'],Dalmia:['Dalmia Fuel Capacity %','Dalmia Dead fuel','Dalmia available Fuel','Dalmia Backup Hrs'],Hyderabad:['Hyd Fuel Capacity %','Hyd Dead fuel','Hyd available Fuel','Hyd Backup Hrs'],Quetta:['Quetta Fuel Capacity','Quetta Dead fuel','Quetta available Fuel','Quetta Backup Hrs']};
 /* Fuel-detail mappings use the workbook's real sheet/header names. */
 const FUEL_DETAIL={
- Korangi:{sheets:['Korangi Fuel Consumtion Data'],consume:['Fuel Consume','Fuel Consumed'],hours:['DG-1 hrs','DG-2 hrs','DG-3 hrs','DG-4 hrs','DG-5 hrs'],dgFuel:['DG1 Fuel consume','DG2 Fuel consume','DG3 Fuel consume','DG4 Fuel consume','DG5 Fuel consume']},
- Dalmia:{sheets:['Dalmia Fuel'],consume:['Fuel Consume','Fuel Consumed'],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:['DG-1 Fuel consume(L)','DG-2 Fuel consume(L)']},
- Hyderabad:{sheets:['Hyderabad Fuel'],consume:['Fuel Consume','Fuel Consumed','ZNV Fuel Consume','Total Fuel2'],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:['DG-1 Fuel Consumption','DG-2 Fuel Consumption']},
- Quetta:{sheets:['Quetta Fuel'],consume:['Fuel Consumed','Fuel Consume'],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:[]}
+ Korangi:{sheets:['Korangi Fuel Consumtion Data'],consume:['Fuel Consume','Fuel Consumed'],available:['Total Fuel'],hours:['DG-1 hrs','DG-2 hrs','DG-3 hrs','DG-4 hrs','DG-5 hrs'],dgFuel:['DG1 Fuel consume','DG2 Fuel consume','DG3 Fuel consume','DG4 Fuel consume','DG5 Fuel consume']},
+ Dalmia:{sheets:['Dalmia Fuel'],consume:['Fuel Consume','Fuel Consumed'],available:[],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:['DG-1 Fuel consume(L)','DG-2 Fuel consume(L)']},
+ Hyderabad:{sheets:['Hyderabad Fuel'],consume:['Fuel Consume','Fuel Consumed','ZNV Fuel Consume','Total Fuel2'],available:[],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:['DG-1 Fuel Consumption','DG-2 Fuel Consumption']},
+ Quetta:{sheets:['Quetta Fuel'],consume:['Fuel Consumed','Fuel Consume'],available:['Last available'],hours:['DG-1 hrs','DG-2 hrs'],dgFuel:[]}
 };
 const headerMap=headers=>{const m={};(headers||[]).forEach(h=>{if(h!=null)m[norm(h)]=h});return m};
 const getHeader=(headers,names)=>{const m=headerMap(headers);for(const n of names||[]){if(m[norm(n)])return m[norm(n)]}return null};
@@ -164,6 +171,7 @@ function detailFuelRows(site){
   for(const original of (src.rows||[])){const r={...original,_fuelSheet:sh};
    let dh=getHeader(headers,['Date']);if(dh&&r[dh]!=null){const dt=new Date(r[dh]);if(!isNaN(dt)){if(r.Month==null)r.Month=MON[dt.getMonth()];if(num(r.Year)==null&&dateHasYear(r[dh]))r.Year=dt.getFullYear();}}
    r._consumeHeader=getHeader(headers,cfg.consume);
+   r._availableHeader=getHeader(headers,cfg.available||[]);
    r._dgFuelHeaders=cfg.dgFuel.map(n=>getHeader(headers,[n])).filter(Boolean);
    r._dgHourHeaders=cfg.hours.map(n=>getHeader(headers,[n])).filter(Boolean);
    r._fuelAddedHeader=getHeader(headers,['Fuel Added']);
@@ -181,17 +189,17 @@ function fuelDetailStats(site){
  const primary=rows.filter(r=>r._consumeHeader&&num(r[r._consumeHeader])!=null);
  let kpis=[];
  if(primary.length){
-  const vals=primary.map(r=>num(r[r._consumeHeader])).filter(v=>v!=null);
+  const vals=primary.map(r=>num(r[r._consumeHeader])).filter(v=>v!=null&&v>=0);
   if(vals.length)kpis.push({l:'Avg fuel consumption',v:avg(vals),u:'L'});
  }
  const dgHeaders=[...new Set(rows.flatMap(r=>r._dgFuelHeaders||[]))];
  // Dalmia has no overall consumption column: sum DG-1 + DG-2 per record before averaging.
  if(!primary.length&&dgHeaders.length){
-  const totals=rows.map(r=>{const vals=dgHeaders.map(h=>num(r[h])).filter(v=>v!=null);return vals.length?sum(vals):null}).filter(v=>v!=null);
+  const totals=rows.map(r=>{const vals=dgHeaders.map(h=>num(r[h])).filter(v=>v!=null&&v>=0);return vals.length?sum(vals):null}).filter(v=>v!=null&&v>=0);
   if(totals.length)kpis.push({l:'Avg fuel consumption',v:avg(totals),u:'L'});
  }
  const hrHeaders=[...new Set(rows.flatMap(r=>r._dgHourHeaders||[]))];
- for(const h of hrHeaders){const vals=rows.map(r=>num(r[h])).filter(v=>v!=null);if(vals.length)kpis.push({l:h.replace(/hrs?/i,'running hours'),v:avg(vals),u:'h',d:1});}
+ for(const h of hrHeaders){const vals=rows.map(r=>num(r[h])).filter(v=>v!=null&&v>=0);if(vals.length)kpis.push({l:h.replace(/hrs?/i,'running hours'),v:avg(vals),u:'h',d:1});}
  return kpis;
 }
 
@@ -219,27 +227,64 @@ function durationMinutes(value){
  if(match)return Number(match[1])*60+Number(match[2]);
  const parsed=num(text);return parsed!=null?(parsed>=0&&parsed<=1?parsed*1440:parsed):null;
 }
+function fuelStatusYears(){
+ const years=[...new Set(fuelRows().map(row=>row._y))].filter(year=>year!=null).sort((a,b)=>a-b);
+ return years;
+}
+function fuelDataYears(){
+ if(DATA._fy)return DATA._fy;
+ const years=new Set(fuelStatusYears());
+ for(const site of Object.keys(DATA.sites||{}))for(const row of detailFuelRows(site))if(row._y!=null&&row._y>=2024)years.add(row._y);
+ DATA._fy=[...years].sort((a,b)=>a-b);
+ return DATA._fy;
+}
+function latestFuelYear(){
+ const years=fuelDataYears();
+ return years.length?years[years.length-1]:null;
+}
 function monthlyFuelData(){
+ const year=S.year?+S.year:latestFuelYear();
  const months=new Map(),sites=Object.keys(DATA.sites||{}).filter(site=>FUEL[site]);
- const get=(site,key)=>{const id=site+'|'+key;if(!months.has(id)){const year=Math.floor(key/12),month=key%12;months.set(id,{site,key,label:`${MON[month]} ${year}`,opening:null,min:null,closing:null,backup:null,lastFueling:null,consumption:0,hasConsumption:false,loadShedding:0,hasLoadShedding:false})}return months.get(id)};
- const status=filt(fuelRows(),true,false),statusHeaders=Object.keys((DATA.fuelStatus||[])[0]||[]),headerMapStatus=headerMap(statusHeaders);
+ const get=(site,key)=>{const id=site+'|'+key;if(!months.has(id)){const y=Math.floor(key/12),month=key%12;months.set(id,{site,key,label:`${MON[month]} ${y}`,year:y,opening:null,min:null,closing:null,backup:null,lastFueling:null,consumption:0,hasConsumption:false,loadShedding:0,hasLoadShedding:false})}return months.get(id)};
+ const status=fuelRows().filter(row=>year==null||row._y===year),statusHeaders=Object.keys((DATA.fuelStatus||[])[0]||[]),headerMapStatus=headerMap(statusHeaders);
  for(const site of sites){
   const [, ,availableName,backupName]=FUEL[site],availableHeader=headerMapStatus[norm(availableName)],backupHeader=headerMapStatus[norm(backupName)],statusByMonth=new Map();
   for(const row of status){const key=row._y*12+row._m,values=statusByMonth.get(key)||[],available=availableHeader?num(row[availableHeader]):null;if(available!=null)values.push({row,available});statusByMonth.set(key,values);}
   for(const [key,values] of statusByMonth){const month=get(site,key),fuelValues=values.map(entry=>entry.available);if(fuelValues.length){month.opening=fuelValues[0];month.min=Math.min(...fuelValues);month.closing=fuelValues[fuelValues.length-1];}const backupValues=values.map(entry=>backupHeader?num(entry.row[backupHeader]):null).filter(value=>value!=null);month.backup=backupValues.length?backupValues[backupValues.length-1]:null;}
-  const rows=filt(detailFuelRows(site),true,false);
+  const rows=detailFuelRows(site).filter(row=>year==null||row._y===year);
   for(const row of rows){const key=row._y*12+row._m,month=get(site,key),added=row._fuelAddedHeader?num(row[row._fuelAddedHeader]):null;if(added!=null&&added>0)month.lastFueling=row._t;
-   let consumption=row._consumeHeader?num(row[row._consumeHeader]):null;if(consumption==null){const dg=(row._dgFuelHeaders||[]).map(header=>num(row[header])).filter(value=>value!=null);if(dg.length)consumption=sum(dg);}
-   if(consumption!=null){month.consumption+=consumption;month.hasConsumption=true;}
+    const detailAvailable=row._availableHeader?num(row[row._availableHeader]):null;if(detailAvailable!=null&&month.closing==null){if(month.opening==null)month.opening=detailAvailable;month.min=month.min==null?detailAvailable:Math.min(month.min,detailAvailable);month.closing=detailAvailable;}
+   let consumption=row._consumeHeader?num(row[row._consumeHeader]):null;if(consumption==null||consumption<0){const dg=(row._dgFuelHeaders||[]).map(header=>num(row[header])).filter(value=>value!=null),dgTotal=dg.length?sum(dg):null;if(dgTotal!=null&&dgTotal>=0)consumption=dgTotal;}
+   if(consumption!=null&&consumption>=0){month.consumption+=consumption;month.hasConsumption=true;}
    const shedding=row._loadShedHeader?durationMinutes(row[row._loadShedHeader]):null;if(shedding!=null){month.loadShedding+=shedding;month.hasLoadShedding=true;}
   }
  }
  return [...months.values()].sort((a,b)=>a.key-b.key||a.site.localeCompare(b.site));
 }
-function dataTable(el,headers,rows){
+function matrixTable(el,keys,monthly,sites){
+ if(!keys.length){nd(el);return}
+ el.closest('.card').classList.add('table-card');
+ const head=keys.length?['Month',...sites]:[],rows=keys.map(key=>{
+  const label=`${MON[key%12]} ${Math.floor(key/12)}`;
+  const cells=sites.map(site=>{
+   const row=monthly.find(item=>item.site===site&&item.key===key);
+   if(!row||row.closing==null)return `<td>—</td>`;
+   const tip=`<span>${esc(label)} · ${esc(site)}</span>`+
+    `<div><span>Opening</span><b>${fmt(row.opening)}</b></div>`+
+    `<div><span>Minimum</span><b>${fmt(row.min)}</b></div>`+
+    `<div><span>Closing</span><b>${fmt(row.closing)}</b></div>`+
+    `<div><span>Backup</span><b>${fmt(row.backup)} h</b></div>`+
+    `<div><span>Last fueling</span><b>${row.lastFueling?esc(new Date(row.lastFueling).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})):'—'}</b></div>`;
+   return `<td data-tip="${esc(tip)}">${fmt(row.closing)}</td>`;
+  }).join('');
+  return `<tr><td>${esc(label)}</td>${cells}</tr>`;
+ }).join('');
+ el.innerHTML=`<div class="table-wrap"><table class="data-table matrix"><thead><tr>${head.map(header=>`<th>${esc(header)}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function dataTable(el,headers,rows,fit){
  if(!rows.length){nd(el);return}
  el.closest('.card').classList.add('table-card');
- el.innerHTML=`<div class="table-wrap"><table class="data-table"><thead><tr>${headers.map(header=>`<th>${esc(header)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(value=>`<td>${esc(value==null?'—':value)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+ el.innerHTML=`<div class="table-wrap"><table class="data-table${fit?' fit':''}"><thead><tr>${headers.map(header=>`<th>${esc(header)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(value=>`<td>${esc(value==null?'—':value)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 function info(site){let s=DATA.sites[site];if(s._info)return s._info;let hm={};s.headers.forEach(h=>hm[norm(h)]=h);const H=n=>n?hm[norm(n)]:undefined;let c=CFG[site]||{};
  let items=(c.items||[]).map(it=>({cat:it.cat,name:it.name,kw:H(it.kw),amp:(it.amp||[]).map(H).filter(Boolean),pct:H(it.pct)})).filter(it=>it.kw||it.amp.length);
@@ -290,21 +335,25 @@ function donut(el,o){let tot=sum(o.items.map(x=>Math.max(0,x.val)));if(!tot){nd(
  let cs=o.items.map(x=>{let l=Math.max(0,x.val)/tot*C,s=`<circle cx="${R}" cy="${R}" r="${r}" fill="none" stroke="${x.color}" stroke-width="${sw}" style="--sw:${sw}px" stroke-dasharray="${l} ${C-l}" stroke-dashoffset="${-cum}" transform="rotate(-90 ${R} ${R})" data-tip="${esc(`<span>${x.label}</span><b>${(x.val/tot*100).toFixed(1)}%</b>`)}"/>`;cum+=l;return s}).join('');
  el.innerHTML=`<div class="dn"><svg width="${D}" height="${D}" viewBox="0 0 ${D} ${D}">${cs}<text x="${R}" y="${R+2}" text-anchor="middle" class="dbig">${o.big}</text><text x="${R}" y="${R+14}" text-anchor="middle" class="dsm">${o.small||''}</text></svg><div class="dl">${o.items.map(x=>`<div><i style="background:${x.color}"></i><span>${esc(x.label)}</span><b>${(x.val/tot*100).toFixed(1)}%</b></div>`).join('')}</div></div>`}
 function hbars(el,rows,o={}){rows=rows.filter(r=>r.val!=null);if(!rows.length){nd(el);return}let mx=Math.max(...rows.map(r=>r.max??r.val),1e-9);
- el.innerHTML=`<div class="${o.cols?'hbl':'hbs'}${o.cols&&rows.length<5?' one':''}${rows.length<=4?' few':''}">`+rows.map((r,i)=>`<div class="hb" data-tip="${esc(`<span>${r.label}</span><b>${r.min!=null?`min ${fmt(r.min)} · avg ${fmt(r.val)} · max ${fmt(r.max)}`:fmt(r.val)+(o.unit||'')}</b>`)}"><span class="hl" title="${esc(r.label)}">${r.dot?`<i style="background:${r.dot}"></i>`:''}${esc(r.label)}</span><span class="ht">${r.max!=null?`<i class="rg" style="left:${r.val/mx*100}%;width:${Math.max(0,(r.max-r.val)/mx*100)}%;background:${r.color}"></i>`:''}<i class="hf" style="width:${Math.max(1.5,r.val/mx*100)}%;background:${r.color};animation-delay:${i*30}ms"></i></span><span class="hv2">${fmt(r.val)}${o.unit||''}</span></div>`).join('')+'</div>'}
+ el.innerHTML=`<div class="${o.cols?'hbl':'hbs'}${o.grid?' rowfill':''}${o.cols&&rows.length<5?' one':''}${rows.length<=3?' few':''}">`+rows.map((r,i)=>`<div class="hb" data-tip="${esc(`<span>${r.full||r.label}</span><b>${r.min!=null?`min ${fmt(r.min)} · avg ${fmt(r.val)} · max ${fmt(r.max)}`:fmt(r.val)+(o.unit||'')}</b>`)}"><span class="hl" title="${esc(r.full||r.label)}">${r.dot?`<i style="background:${r.dot}"></i>`:''}${esc(r.label)}</span><span class="ht">${r.max!=null?`<i class="rg" style="left:${r.val/mx*100}%;width:${Math.max(0,(r.max-r.val)/mx*100)}%;background:${r.color}"></i>`:''}<i class="hf" style="width:${Math.max(1.5,r.val/mx*100)}%;background:${r.color};animation-delay:${i*30}ms"></i></span><span class="hv2">${fmt(r.val)}${o.unit||''}</span></div>`).join('')+'</div>'}
 function spark(vals,color){let v=vals.filter(x=>x!=null);if(v.length<2)return '';if(v.length>40){let k=Math.ceil(v.length/40);v=v.filter((_,i)=>i%k===0)}let mn=Math.min(...v),mx=Math.max(...v);if(mn===mx){mn-=1;mx+=1}
  let p=v.map((x,i)=>(i?'L':'M')+(i*58/(v.length-1)).toFixed(1)+' '+(24-(x-mn)/(mx-mn)*22).toFixed(1)).join('');return `<svg viewBox="0 0 58 26"><path d="${p}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
 /* ---------- filters ---------- */
 function chipRow(k,opts,cur,cls=''){return `<div class="chips" data-k="${k}">`+opts.map(([v,l])=>`<button class="chip ${cls} ${String(cur)===String(v)?'on':''}" data-v="${esc(v)}">${esc(l)}</button>`).join('')+'</div>'}
 function renderFilters(){let sites=Object.keys(DATA.sites);if(S.view==='load'&&S.site==='all'){S.site=sites[0];S.item='all';S.cat=''}if(!sites.includes(S.site)&&S.site!=='all')S.site=sites[0];
  $('sites').innerHTML=chipRow('site',[...(S.view==='fuel'?[['all','All locations']]:[]),...sites.map(s=>[s,s])],S.site);$('views').innerHTML=chipRow('view',[['load','Load & Equipment'],['fuel','Fuel & Backup']],S.view);
- let rows=S.view==='fuel'?fuelDateRows():S.site==='all'?sites.flatMap(s=>prep(s)).sort((a,b)=>a._t-b._t):prep(S.site),ys=[...new Set(rows.map(r=>r._y))].sort();if(S.year&&!ys.map(String).includes(S.year))S.year='';
- let ms=[...new Set(rows.filter(r=>!S.year||String(r._y)===S.year).map(r=>r._m))].sort((a,b)=>a-b);if(S.month!==''&&!ms.includes(+S.month))S.month='';
- let h=`<div class="grp"><span class="gl">Annual</span>${chipRow('year',[['','All'],...ys.map(y=>[y,y])],S.year)}</div><div class="grp"><span class="gl">Quarter</span>${chipRow('quarter',[['','All'],['1','Q1'],['2','Q2'],['3','Q3'],['4','Q4']],S.quarter)}</div><div class="grp"><span class="gl">Month</span>${chipRow('month',[['','All'],...ms.map(m=>[m,MON[m]])],S.month)}</div><div class="grp"><span class="gl">Period</span>${chipRow('period',[['7','7 days'],['30','30 days'],['90','90 days'],['365','1 year'],['all','All']],S.period)}</div>`;
+ let rows=S.view==='fuel'?fuelRows():S.site==='all'?sites.flatMap(s=>prep(s)).sort((a,b)=>a._t-b._t):prep(S.site),ys=[...new Set(rows.map(r=>r._y))].filter(y=>y!=null).sort((a,b)=>a-b);
+ if(S.view==='fuel'){ys=fuelDataYears();if(!ys.length){const latest=latestFuelYear();if(latest!=null)ys=[latest]}if(!S.year||!ys.map(String).includes(S.year))S.year=ys.length?String(ys[ys.length-1]):''}
+ else if(S.year&&!ys.map(String).includes(S.year))S.year='';
+ let ms=S.view==='fuel'?[...new Set(monthlyFuelData().map(r=>r.key%12))].sort((a,b)=>a-b):[...new Set(rows.filter(r=>!S.year||String(r._y)===S.year).map(r=>r._m))].sort((a,b)=>a-b);if(S.month!==''&&!ms.includes(+S.month))S.month='';
+ const yearOpts=S.view==='fuel'?ys.map(y=>[y,y]):[['','All'],...ys.map(y=>[y,y])];
+ let h=`<div class="grp"><span class="gl">Annual</span>${chipRow('year',yearOpts,S.year)}</div><div class="grp"><span class="gl">Quarter</span>${chipRow('quarter',[['','All'],['1','Q1'],['2','Q2'],['3','Q3'],['4','Q4']],S.quarter)}</div><div class="grp"><span class="gl">Month</span>${chipRow('month',[['','All'],...ms.map(m=>[m,MON[m]])],S.month)}</div><div class="grp"><span class="gl">Period</span>${chipRow('period',[['7','7 days'],['30','30 days'],['90','90 days'],['365','1 year'],['all','All']],S.period)}</div>`;
  if(S.view==='load'&&S.site!=='all'){let I=info(S.site);if(!I.cats.includes(S.cat))S.cat=I.cats[0]||'';let ci=I.items.filter(i=>i.cat===S.cat);if(S.item!=='all'&&!ci.some(i=>i.name===S.item))S.item='all';
   h+=`<div class="grp"><span class="gl">Resolution</span>${chipRow('res',[['auto','Auto'],['h','Hourly'],['d','Daily'],['m','Monthly']],S.res,'l')}</div><div class="grp"><span class="gl">Unit</span>${chipRow('unit',[['KW','kW'],['AMP','Ampere']],S.unit,'l')}</div><div class="grp"><span class="gl">Show</span>${chipRow('stat',[['avg','Average'],['max','Peak'],['min','Low']],S.stat,'l')}</div>
   <div class="grp"><span class="gl">Equipment</span>${chipRow('cat',I.cats.map(c=>[c,c]),S.cat)}${ci.length>1?'<span class="sep"></span>'+chipRow('item',[['all','All'],...ci.map(i=>[i.name,i.name])],S.item,'l'):''}</div>`}
  let fr=filt(rows);h+=`<div class="range">${fr.length?`${fr[0]._d} ${MON[fr[0]._m]} ${fr[0]._y} → ${fr[fr.length-1]._d} ${MON[fr[fr.length-1]._m]} ${fr[fr.length-1]._y} · ${fr.length.toLocaleString()} readings`:'No readings'}</div>`;$('filters').innerHTML=h}
 document.addEventListener('click',e=>{let b=e.target.closest('.chip');if(!b||!DATA)return;let k=b.parentNode.dataset.k;if(!k)return;S[k]=b.dataset.v;if(k==='cat')S.item='all';if(k==='site'){S.item='all';S.cat=''}if(k==='quarter'||k==='year'){S.month='';S.period='all'}if(k==='month'){S.quarter='';S.period='all'}render()});
+document.addEventListener('change',e=>{let s=e.target.closest('select[data-k]');if(!s||!DATA)return;S[s.dataset.k]=s.value;render()});
 /* ---------- render ---------- */
 function card(id,title,cls=''){return `<div class="card ${cls}"><div class="ch"><h3>${title}</h3><div class="hr"></div></div><div class="cb ${cls.includes('t')?'t':''}" id="${id}"></div></div>`}
 function legend(arr){return arr.map(s=>`<span><i style="background:${s.color}"></i>${esc(s.name)}</span>`).join('')}
@@ -315,11 +364,14 @@ const SN={avg:'Avg',max:'Peak',min:'Low'};
 function renderLoadOverview(){let sites=Object.keys(DATA.sites),stats=sites.map((site,i)=>{let I=info(site),rows=filt(prep(site)),tf=I.items.find(x=>x.cat==='Transformer')||I.items[0],equip=I.items.filter(x=>x.cat!=='Transformer');if(!equip.length)equip=I.items;let load=rows.map(r=>equip.map(x=>iv(x,r)).filter(v=>v!=null).reduce((a,v)=>a+v,0)).filter((v,j)=>equip.some(x=>iv(x,rows[j])!=null));return{site,color:PAL[i%PAL.length],transformer:tf?st(rows.map(r=>iv(tf,r)),S.stat):null,equipment:avg(load),pct:tf&&tf.pct?st(rows.map(r=>num(r[tf.pct])),S.stat)*100:null}}),avgTf=avg(stats.map(x=>x.transformer)),avgEq=avg(stats.map(x=>x.equipment));
  $('kpis').innerHTML=kpiHTML([{l:'Locations',v:stats.length,d:0},{l:'Avg transformer load',v:avgTf,u:ul()},{l:'Avg equipment load',v:avgEq,u:ul()}]);
  draw([{id:'ovLoadTf',title:'Transformer Load by Location',fn:el=>{setHR(el,`<span>${SN[S.stat]} · <b>${ul()}</b></span>`);hbars(el,stats.map(x=>({label:x.site,val:x.transformer,color:x.color})),{cols:true})}},{id:'ovEquipment',title:'Equipment Load',fn:el=>{setHR(el,`<span>average · <b>${ul()}</b></span>`);hbars(el,stats.map(x=>({label:x.site,val:x.equipment,color:x.color})),{cols:true})}},{id:'ovLoadPct',title:'Transformer Load by Location',fn:el=>{setHR(el,'<span>Load · %</span>');hbars(el,stats.map(x=>({label:x.site,val:x.pct,color:x.pct>80?P.pink:x.color})),{unit:'%',cols:true})}}])}
-function renderFuelOverview(){let all=filt(fuelRows()),headers=Object.keys((DATA.fuelStatus||[])[0]||[]),hm=headerMap(headers),H=n=>hm[norm(n)]||n,sites=Object.keys(DATA.sites).filter(site=>FUEL[site]),stats=sites.map((site,i)=>{let [cap,dead,av,hr]=FUEL[site].map(H),row=all.slice().reverse().find(r=>num(r[av])!=null||num(r[hr])!=null||num(r[cap])!=null)||{},capacity=num(row[cap]),available=num(row[av]);return{site,color:PAL[i%PAL.length],available,backup:num(row[hr]),level:capacity?available/capacity*100:null}}),meanLevel=avg(stats.map(x=>x.level)),totalFuel=stats.map(x=>x.available).filter(v=>v!=null).reduce((a,v)=>a+v,0),monthly=monthlyFuelData(),keys=[...new Set(monthly.map(row=>row.key))].sort((a,b)=>a-b).slice(-12),labels=keys.map(key=>`${MON[key%12]} ${Math.floor(key/12)}`),short=keys.map(key=>MON[key%12]+` '${String(Math.floor(key/12)).slice(-2)}`);
- $('kpis').innerHTML=kpiHTML([{l:'Locations',v:stats.length,d:0},{l:'Available fuel · all locations',v:totalFuel},{l:'Avg tank level',v:meanLevel,u:'%',d:1}]);
- const monthlyRows=monthly.filter(row=>keys.includes(row.key)).map(row=>[row.label,row.site,fmt(row.opening),fmt(row.min),fmt(row.closing),row.lastFueling?new Date(row.lastFueling).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'—']);
- const metricSeries=metric=>stats.map(site=>({name:site.site,color:site.color,vals:keys.map(key=>{const row=monthly.find(item=>item.site===site.site&&item.key===key);if(!row)return null;if(metric==='consumption')return row.hasConsumption?row.consumption:null;return row.hasLoadShedding?row.loadShedding/60:null})}));
- draw([{id:'ovFuel',title:'Available Fuel by Location',fn:el=>{setHR(el,'<span>latest reading</span>');hbars(el,stats.map(x=>({label:x.site,val:x.available,color:x.color})),{cols:true})}},{id:'ovBackup',title:'Backup Hours by Location',fn:el=>{setHR(el,'<span>latest reading</span>');hbars(el,stats.map(x=>({label:x.site,val:x.backup,color:x.color})),{unit:' h',cols:true})}},{id:'ovFuelLevel',title:'Tank Level by Location',fn:el=>{setHR(el,'<span>latest reading · %</span>');hbars(el,stats.map(x=>({label:x.site,val:x.level,color:x.level<25?P.pink:x.color})),{unit:'%',cols:true})}},{id:'ovFuelTable',title:'All Fuel Data',cls:'c2',fn:el=>{setHR(el,'<span>monthly · latest 12 months</span>');dataTable(el,['Month','Location','Fuel availability','Min available','Closing fuel','Last fueling'],monthlyRows)}},{id:'ovFuelConsumption',title:'Monthly fuel consumption',cls:'c2',fn:el=>{setHR(el,'<span>litres · by location</span>');lineChart(el,{series:metricSeries('consumption'),labels,short,unit:'L'})}},{id:'ovLoadShedding',title:'Monthly load shedding',cls:'c2',fn:el=>{setHR(el,'<span>hours · by location</span>');lineChart(el,{series:metricSeries('loadShedding'),labels,short,unit:'h'})}}])}
+function renderFuelOverview(){const year=S.year?+S.year:latestFuelYear(),monthly=monthlyFuelData(),latestStatus=fuelRows().slice().reverse(),statusAll=fuelRows().filter(r=>year==null||r._y===year),all=filt(statusAll),headers=Object.keys((DATA.fuelStatus||[])[0]||[]),hm=headerMap(headers),H=n=>hm[norm(n)]||n,sites=Object.keys(DATA.sites).filter(site=>FUEL[site]),stats=sites.map((site,i)=>{let [cap,dead,av,hr]=FUEL[site].map(H);const pick=rows=>rows.slice().reverse().find(r=>num(r[av])!=null||num(r[hr])!=null||num(r[cap])!=null)||{};const row=pick(all)||pick(statusAll)||{},latest=monthly.filter(item=>item.site===site&&item.closing!=null).slice(-1)[0],capRow=latestStatus.find(r=>num(r[cap])!=null)||{},capacity=num(row[cap])??num(capRow[cap]),available=num(row[av])??(latest?latest.closing:null);return{site,color:PAL[i%PAL.length],available,backup:num(row[hr]),level:capacity&&available!=null?available/capacity*100:null}}),meanLevel=avg(stats.map(x=>x.level)),totalFuel=stats.map(x=>x.available).filter(v=>v!=null).reduce((a,v)=>a+v,0),keys=[...new Set(monthly.map(row=>row.key))].sort((a,b)=>a-b),statusKeys=keys.filter(key=>monthly.some(row=>row.key===key&&(row.closing!=null||row.backup!=null))),detailKeys=keys.filter(key=>monthly.some(row=>row.key===key&&(row.hasConsumption||row.hasLoadShedding))),tableKeys=statusKeys.length?statusKeys:keys,labels=detailKeys.map(key=>`${MON[key%12]} ${Math.floor(key/12)}`),short=detailKeys.map(key=>MON[key%12]+` '${String(Math.floor(key/12)).slice(-2)}`);
+ const matrixSites=sites.filter(site=>monthly.some(row=>row.site===site&&row.closing!=null));
+ $('kpis').innerHTML=kpiHTML([{l:'Locations with fuel data',v:stats.filter(x=>x.available!=null).length,d:0},{l:'Available fuel · recorded',v:totalFuel},{l:'Avg tank level',v:meanLevel,u:'%',d:1}]);
+ const metricSeries=metric=>stats.map(site=>({name:site.site,color:site.color,vals:detailKeys.map(key=>{const row=monthly.find(item=>item.site===site.site&&item.key===key);if(!row)return null;if(metric==='consumption')return row.hasConsumption?row.consumption:null;return row.hasLoadShedding?row.loadShedding/60:null})}));
+ const consumptionSeries=metricSeries('consumption'),lsSites=stats.map(site=>site.site);if(S.lsSite&&!lsSites.includes(S.lsSite))S.lsSite='';
+ const lsSeries=metricSeries('loadShedding').filter(series=>!S.lsSite||series.name===S.lsSite);
+ const lsOpts=[['','All locations'],...lsSites.map(name=>[name,name])];
+ draw([{id:'ovFuel',title:'Available Fuel by Location',fn:el=>{setHR(el,`<span>latest reading · <b>${year||'—'}</b></span>`);hbars(el,stats.map(x=>({label:x.site,val:x.available,color:x.color})),{cols:true})}},{id:'ovBackup',title:'Backup Hours by Location',fn:el=>{setHR(el,`<span>latest reading · <b>${year||'—'}</b></span>`);hbars(el,stats.map(x=>({label:x.site,val:x.backup,color:x.color})),{unit:' h',cols:true})}},{id:'ovFuelTable',title:'All Fuel Data',cls:'c2',fn:el=>{setHR(el,`<span>closing fuel · <b>${year||'—'}</b> · L</span>`);matrixTable(el,tableKeys,monthly,matrixSites)}},{id:'ovFuelConsumption',title:'Monthly fuel consumption',cls:'c2',fn:el=>{setHR(el,legend(consumptionSeries.filter(series=>series.vals.some(value=>value!=null)))+`<span>litres · <b>${year||'—'}</b></span>`);lineChart(el,{series:consumptionSeries,labels,short,unit:'L',min0:true})}},{id:'ovLoadShedding',title:'Monthly load shedding',cls:'c2',fn:el=>{setHR(el,`<label class="hsel">Location <select data-k="lsSite">${lsOpts.map(([value,label])=>`<option value="${esc(value)}"${S.lsSite===value?' selected':''}>${esc(label)}</option>`).join('')}</select></label><span>hours · <b>${year||'—'}</b></span>`);lineChart(el,{series:lsSeries,labels,short,unit:'h',area:!!S.lsSite,min0:true})}}])}
 function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),tf=I.items.find(i=>i.cat==='Transformer')||I.items[0];
  let catItems=I.items.filter(i=>i.cat===S.cat),sel=(S.item==='all'?catItems:catItems.filter(i=>i.name===S.item)).slice(0,6);
  const col=H=>I.items.length?PAL[Math.max(0,I.cats.indexOf(H))%PAL.length]:P.pink,gv=h=>r=>h?num(r[h]):null;
@@ -354,29 +406,49 @@ function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),
  if(I.phases.length===3)L.push({id:'cG',title:'Phase currents',fn:el=>{let ss=I.phases.map((h,i)=>({name:'L'+(i+1),color:[P.pink,P.lime,P.plum][i],vals:series(G,gv(h))}));setHR(el,legend(ss));lineChart(el,{series:ss,labels:lab,short:sh,unit:'A'})}});
  if(I.volt.length===3)L.push({id:'cK',title:'Supply voltage',fn:el=>{let ss=I.volt.map((h,i)=>({name:'L'+(i+1),color:[P.pink,P.lime,P.plum][i],vals:series(G,gv(h))}));setHR(el,legend(ss));lineChart(el,{series:ss,labels:lab,short:sh,unit:'V'})}});
  if(tf&&tf.pct)L.push({id:'cT',title:'Transformer Load',fn:el=>{let v=series(G,gv(tf.pct)).map(x=>x==null?null:x*100);setHR(el,'<span>% · limit 80</span>');lineChart(el,{series:[{name:'Load',color:P.amber,vals:v}],labels:lab,short:sh,area:true,ref:80,min0:true,unit:'%'})}});
- if(I.temps.length)L.push({id:'cL',title:'Room temperature',cls:'c2 t',fn:el=>{const sensors=I.temps.flatMap(t=>t.hs.map(header=>({name:header,color:PAL[I.temps.flatMap(group=>group.hs).indexOf(header)%PAL.length],vals:series(G,r=>{const value=num(r[header]);return value!=null&&value>0&&value<80?value:null})})));setHR(el,legend(sensors)+`<span>°C · <b>${sensors.length} sensors</b></span>`);lineChart(el,{series:sensors,labels:lab,short:sh,unit:'°C'})}});
+ if(I.temps.length)L.push({id:'cL',title:'Room temperature',cls:'c2',fn:el=>{
+  const tv=h=>st(rows.map(r=>{const v=num(r[h]);return v!=null&&v>0&&v<80?v:null}),S.stat);
+  const pidx=h=>{const m=String(h).match(/(?:^|[^0-9])(\d+)\s*$/);return m?+m[1]-1:0};
+  const rname=n=>n.replace(/\bndc\b/gi,'NDC').replace(/\blt\b/gi,'LT').replace(/\b[a-z]/g,c=>c.toUpperCase());
+  const list=I.temps.map(g=>({name:rname(g.name),vals:g.hs.map(h=>({p:pidx(h),v:tv(h)}))}));
+  const useT=I.temps.some(g=>g.hs.some(h=>/T\s*\d+\s*$/i.test(h)));
+  const np=Math.max(1,...list.flatMap(g=>g.vals.map(x=>x.p+1)));
+  const heads=Array.from({length:np},(_,i)=>(useT?'T':'')+(i+1));
+  const body=list.map(g=>[g.name,...Array.from({length:np},(_,i)=>{const hit=g.vals.find(x=>x.p===i);return hit&&hit.v!=null?fmt(hit.v,1):null})]);
+  const count=list.reduce((a,g)=>a+g.vals.filter(x=>x.v!=null).length,0);
+  setHR(el,`<span>°C · ${SN[S.stat].toLowerCase()} · <b>${count} sensors</b></span>`);
+  dataTable(el,['Room',...heads],body,true);
+  const tb=el.querySelector('table');tb.classList.add('temp-table');[...tb.querySelectorAll('tbody td')].forEach(td=>{if(td.textContent==='—')td.classList.add('na')});
+}});
  if(I.telco&&I.non)L.push({id:'cD',title:'Load mix',fn:el=>donut(el,{items:[{label:'Telco',val:telV,color:P.pink},{label:'Non-telco',val:nonV,color:P.lime}],big:fmt(telV/(telV+nonV)*100,0)+'%',small:'telco'})});
  draw(L)}
 function renderFuel(){let site=S.site,F=FUEL[site];if(!F){$('kpis').innerHTML='';$('charts').innerHTML='<div class="card"><div class="nd" style="height:90px">No fuel data for this site</div></div>';return}
+ const year=S.year?+S.year:latestFuelYear();
  let all=fuelRows(),hm=headerMap(Object.keys((DATA.fuelStatus||[])[0]||[])),H=n=>hm[norm(n)]||n;
- let [cap,dead,av,hr]=F.map(H),rows=filt(all),G=groups(rows),last=rows[rows.length-1]||{},lab=G.g.map(g=>g.label),sh=G.g.map(g=>g.short);
- let avS=series(G,r=>num(r[av])),hrS=series(G,r=>num(r[hr])),capV=num(last[cap]),avV=num(last[av]);
+ let [cap,dead,av,hr]=F.map(H),statusAll=all.filter(row=>year==null||row._y===year),rows=filt(statusAll),G=groups(rows),last=rows[rows.length-1]||statusAll[statusAll.length-1]||{},lastAny=all.slice().reverse().find(item=>num(item[av])!=null||num(item[cap])!=null)||{},lab=G.g.map(g=>g.label),sh=G.g.map(g=>g.short);
+ let avS=series(G,r=>num(r[av])),hrS=series(G,r=>num(r[hr])),monthlyAll=monthlyFuelData(),latestMonth=monthlyAll.filter(row=>row.site===site&&row.closing!=null).slice(-1)[0],capV=num(last[cap])??num(lastAny[cap]),avV=num(last[av])??(latestMonth?latestMonth.closing:null),deadV=num(last[dead])??num(lastAny[dead]);
  let diffs=[];for(let i=1;i<avS.length;i++)diffs.push(avS[i]!=null&&avS[i-1]!=null?avS[i]-avS[i-1]:null);
- let use=diffs.filter(d=>d!=null&&d<0),refills=diffs.filter(d=>d!=null&&capV&&d>capV*.05).length;
- let monthly=monthlyFuelData().filter(row=>row.site===site),keys=[...new Set(monthly.map(row=>row.key))].sort((a,b)=>a-b).slice(-12),months=keys.map(key=>monthly.find(row=>row.key===key)),monthLabels=months.map(row=>row.label),monthShort=months.map(row=>row.label.split(' ')[0]);
- let fuelTable=months.map(row=>[row.label,fmt(row.opening),fmt(row.min),fmt(row.closing)]),backupTable=months.map(row=>[row.label,fmt(row.backup)]),usedTable=months.map(row=>[row.label,row.hasConsumption?fmt(row.consumption):'—']),latestMonthly=monthly[monthly.length-1];
- $('kpis').innerHTML=kpiHTML([{l:'Fuel now',v:avV,s:avS},{l:'Fuel level',v:capV?avV/capV*100:null,u:'%',d:1,s:avS.map(v=>v!=null&&capV?v/capV*100:null)},{l:'Backup time',v:num(last[hr]),u:'hrs',d:1,s:hrS},{l:'Tank capacity',v:capV},{l:'Dead fuel',v:num(last[dead])},{l:'Daily use',v:use.length?-avg(use):null,s:diffs.map(d=>d!=null&&d<0?-d:null)},{l:'Refills',v:refills,d:0},...fuelDetailStats(site)]);
- let L=[{id:'fA',title:'Available fuel by month',cls:'c2',fn:el=>{setHR(el,'<span>fuel availability · monthly</span>');dataTable(el,['Month','Fuel availability','Min available','Closing fuel'],fuelTable)}},
- {id:'fB',title:'Backup hours by month',fn:el=>{setHR(el,`<span>latest <b>${fmt(latestMonthly&&latestMonthly.backup)} h</b></span>`);dataTable(el,['Month','Backup hours'],backupTable)}},
- {id:'fC',title:'Tank level',fn:el=>{let p=capV?avV/capV:0;donut(el,{items:[{label:'Fuel',val:Math.max(0,avV||0),color:p<.25?P.pink:P.lime},{label:'Empty space',val:Math.max(0,(capV||0)-(avV||0)),color:'#efe3ea'}],big:fmt(p*100,0)+'%',small:'full'})}},
- {id:'fD',title:'Daily change',cls:'c2',fn:el=>{setHR(el,'<span><i style="background:#7dbb2f"></i>refill <i style="background:#e6007e;margin-left:6px"></i>used</span>');barChart(el,{items:diffs.map((d,i)=>({label:lab[i+1],short:sh[i+1],val:d,color:d>=0?P.lime:P.pink}))})}},
- {id:'fG',title:'Fuel used by month',cls:'c2',fn:el=>{setHR(el,'<span>litres · monthly</span>');dataTable(el,['Month','Fuel used'],usedTable)}},
- {id:'fH',title:'Monthly fuel consumption',cls:'c2',fn:el=>{setHR(el,'<span>litres</span>');lineChart(el,{series:[{name:site,color:P.pink,vals:months.map(row=>row.hasConsumption?row.consumption:null)}],labels:monthLabels,short:monthShort,unit:'L'})}},
- {id:'fI',title:'Monthly load shedding',cls:'c2',fn:el=>{setHR(el,'<span>hours</span>');lineChart(el,{series:[{name:site,color:P.lime,vals:months.map(row=>row.hasLoadShedding?row.loadShedding/60:null)}],labels:monthLabels,short:monthShort,unit:'h'})}}];
- let lastAll=all[all.length-1]||{},locations=Object.keys(DATA.sites).filter(name=>FUEL[name]),sites=locations.map(name=>{let f=FUEL[name].map(H);return{name,hrs:num(lastAll[f[3]]),pct:num(lastAll[f[2]])/num(lastAll[f[0]])*100}});
- L.push({id:'fE',title:'Backup hours by site',fn:el=>{setHR(el,'<span>latest</span>');hbars(el,sites.map(x=>({label:x.name,val:x.hrs,color:x.name===site?P.pink:P.lime})),{unit:' h'})}},
- {id:'fF',title:'Tank level by site',fn:el=>{setHR(el,'<span>latest</span>');hbars(el,sites.map(x=>({label:x.name,val:x.pct,color:x.name===site?P.pink:P.lime})),{unit:'%'})}});
- draw(L)}
+ let use=diffs.filter(d=>d!=null&&d<0),refills=avS.filter(value=>value!=null).length>1?diffs.filter(d=>d!=null&&capV&&d>capV*.05).length:null;
+ let monthly=monthlyAll.filter(row=>row.site===site),keys=[...new Set(monthly.map(row=>row.key))].sort((a,b)=>a-b);
+ const monthRow=key=>monthly.find(row=>row.key===key);
+ const statusKeys=keys.filter(key=>{const row=monthRow(key);return row&&(row.closing!=null||row.backup!=null)});
+ const backupKeys=keys.filter(key=>{const row=monthRow(key);return row&&row.backup!=null});
+ const usedKeys=keys.filter(key=>{const row=monthRow(key);return row&&row.hasConsumption});
+ const shedKeys=keys.filter(key=>{const row=monthRow(key);return row&&row.hasLoadShedding});
+ const monthLabels=usedKeys.map(key=>`${MON[key%12]} ${Math.floor(key/12)}`),monthShort=usedKeys.map(key=>MON[key%12]);
+ const fuelTable=statusKeys.map(key=>{const row=monthRow(key);return[`${MON[key%12]} ${Math.floor(key/12)}`,fmt(row.opening),fmt(row.min),fmt(row.closing)]});
+ const backupTable=backupKeys.map(key=>{const row=monthRow(key);return[`${MON[key%12]} ${Math.floor(key/12)}`,fmt(row.backup)]});
+ const usedTable=usedKeys.map(key=>{const row=monthRow(key);return[`${MON[key%12]} ${Math.floor(key/12)}`,fmt(row.consumption)]});
+ const lastStatus=backupKeys.length?monthRow(backupKeys[backupKeys.length-1]):null;
+ if(!statusKeys.length&&!usedKeys.length&&!shedKeys.length){$('kpis').innerHTML='';$('charts').innerHTML=`<div class="card"><div class="ch"><h3>Fuel &amp; Backup</h3></div><div class="cb"><div class="nd" style="height:90px">No fuel data recorded for ${esc(site)} in ${year||'this year'}.</div></div></div>`;return}
+ $('kpis').innerHTML=kpiHTML([{l:'Fuel now',v:avV,s:avS},{l:'Fuel level',v:capV&&avV!=null?avV/capV*100:null,u:'%',d:1,s:avS.map(v=>v!=null&&capV?v/capV*100:null)},{l:'Backup time',v:num(last[hr]),u:'hrs',d:1,s:hrS},{l:'Tank capacity',v:capV},{l:'Dead fuel',v:deadV},{l:'Daily use',v:use.length?-avg(use):null,s:diffs.map(d=>d!=null&&d<0?-d:null)},{l:'Refills',v:refills,d:0},...fuelDetailStats(site)]);
+ let L=[{id:'fA',title:'Available fuel by month',cls:'c2',fn:el=>{setHR(el,`<span>fuel availability · <b>${year||'—'}</b></span>`);dataTable(el,['Month','Fuel availability','Min available','Closing fuel'],fuelTable,true)}},
+ {id:'fB',title:'Backup hours by month',fn:el=>{setHR(el,`<span>latest <b>${fmt(lastStatus&&lastStatus.backup)} h</b> · ${year||'—'}</span>`);dataTable(el,['Month','Backup hours'],backupTable)}},
+ {id:'fC',title:'Tank level',fn:el=>{if(avV==null||!capV){nd(el);return}let p=avV/capV;donut(el,{items:[{label:'Fuel',val:Math.max(0,avV||0),color:p<.25?P.pink:P.lime},{label:'Empty space',val:Math.max(0,(capV||0)-(avV||0)),color:'#efe3ea'}],big:fmt(p*100,0)+'%',small:'full'})}},
+   {id:'fG',title:'Fuel used by month',cls:'c2',fn:el=>{setHR(el,`<span>litres · monthly · <b>${year||'—'}</b></span>`);dataTable(el,['Month','Fuel used'],usedTable)}},
+ {id:'fH',title:'Monthly fuel consumption',cls:'c2',fn:el=>{setHR(el,`<span>litres · <b>${year||'—'}</b></span>`);lineChart(el,{series:[{name:site,color:P.pink,vals:usedKeys.map(key=>{const row=monthRow(key);return row&&row.hasConsumption?row.consumption:null})}],labels:monthLabels,short:monthShort,unit:'L',min0:true})}},
+ {id:'fI',title:'Monthly load shedding',cls:'c2',fn:el=>{setHR(el,`<span>hours · <b>${year||'—'}</b></span>`);lineChart(el,{series:[{name:site,color:P.lime,vals:shedKeys.map(key=>{const row=monthRow(key);return row&&row.hasLoadShedding?row.loadShedding/60:null})}],labels:shedKeys.map(key=>`${MON[key%12]} ${Math.floor(key/12)}`),short:shedKeys.map(key=>MON[key%12]),unit:'h',min0:true})}}];
+  draw(L)}
 /* ---------- init / io ---------- */
 function toast(m){let t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
 function init(){}
@@ -386,6 +458,6 @@ document.addEventListener('mouseleave',()=>tip.style.opacity=0);
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>DATA&&render(),160)});
 let XLSX_PROMISE=null;async function ensureXLSX(){if(window.XLSX)return;if(!XLSX_PROMISE)XLSX_PROMISE=new Promise((resolve,reject)=>{let script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';script.onload=resolve;script.onerror=()=>reject(Error('Could not load the workbook reader.'));document.head.appendChild(script)});await XLSX_PROMISE}
 async function applyWorkbook(file,name,notify){await ensureXLSX();const book=XLSX.read(await file.arrayBuffer(),{type:'array',cellDates:true}),next={sites:{},fuelStatus:[],fuelSheets:{}};for(const site of ['Korangi','Dalmia','Hyderabad','Quetta']){if(!book.Sheets[site])continue;const rows=XLSX.utils.sheet_to_json(book.Sheets[site],{defval:null,raw:false});next.sites[site]={headers:rows.length?Object.keys(rows[0]):[],rows}}if(book.Sheets['Fuel Status'])next.fuelStatus=XLSX.utils.sheet_to_json(book.Sheets['Fuel Status'],{defval:null,raw:false});for(const sheetName of book.SheetNames){if(/fuel/i.test(sheetName)&&!/^fuel status$/i.test(sheetName)){const rows=XLSX.utils.sheet_to_json(book.Sheets[sheetName],{defval:null,raw:false});next.fuelSheets[sheetName]={headers:rows.length?Object.keys(rows[0]):[],rows}}}if(!Object.keys(next.sites).length)throw Error('Could not find Korangi, Dalmia, Hyderabad or Quetta sheets.');applyDashboardData(next,name,notify)}
-function applyDashboardData(data,name,notify){if(!data||!data.sites||!Object.keys(data.sites).length)throw Error('Backend workbook does not contain site data.');DATA=data;S.year='';S.month='';S.quarter='';for(const site of Object.values(DATA.sites)){delete site._p;delete site._info}delete DATA._fp;render();if(notify)toast('Loaded '+name)}
+function applyDashboardData(data,name,notify){if(!data||!data.sites||!Object.keys(data.sites).length)throw Error('Backend workbook does not contain site data.');DATA=data;S.year='';S.month='';S.quarter='';for(const site of Object.values(DATA.sites)){delete site._p;delete site._info}delete DATA._fp;delete DATA._fy;render();if(notify)toast('Loaded '+name)}
 init();window.refreshGitHubWorkbook(applyWorkbook,toast);setInterval(()=>window.refreshGitHubWorkbook(applyWorkbook,toast),5000);
 </script></body></html>
