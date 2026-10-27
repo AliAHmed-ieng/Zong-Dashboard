@@ -31,12 +31,17 @@
     const now = Date.now();
     if (now - lastReleaseCheck < RELEASE_CHECK_INTERVAL_MS) return null;
     lastReleaseCheck = now;
-
     const response = await fetch(config.latestReleaseApiUrl, {
       headers: { Accept: 'application/vnd.github+json' },
       cache: 'no-store'
     });
-    if (!response.ok) throw new Error('GitHub Releases API returned ' + response.status + '.');
+    if (!response.ok) {
+      // Anonymous access from GitHub Pages may be rate-limited (403) or lack
+      // permission to read the releases API. That is expected for the public demo:
+      // fall back to the static snapshot instead of surfacing an error toast.
+      console.warn('Could not check for workbook releases (status ' + response.status + '); using static snapshot.');
+      return null;
+    }
     const release = await response.json();
     if (typeof release.tag_name !== 'string' || !release.tag_name) {
       throw new Error('GitHub did not return a latest published release tag.');
