@@ -431,8 +431,8 @@ function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),
   dataTable(el,['Room',...heads],body,true);
   const tb=el.querySelector('table');tb.classList.add('temp-table');[...tb.querySelectorAll('tbody td')].forEach(td=>{if(td.textContent==='—')td.classList.add('na')});
 }});
- if(I.telco&&I.non)L.push({id:'cD',title:'Load mix',fn:el=>donut(el,{items:[{label:'Telco',val:telV,color:P.pink},{label:'Non-telco',val:nonV,color:P.lime}],big:fmt(telV,0)+' kW',small:fmt(nonV,0)+' kW'})});
-  if(tf)L.push({id:'cUtil',title:'Facility vs Equipment Load',cls:'c2',fn:el=>{let avgFac=st(tfAll,S.stat),avgEquip=avg(equipLoad),util=avgFac?avgEquip/avgFac*100:null;setHR(el,`<span>facility ${fmt(avgFac)} kW · equipment ${fmt(avgEquip)} kW · util ${fmt(util,1)}%</span>`);donut(el,{items:[{label:'Equipment',val:avgEquip,color:P.lime},{label:'Other',val:avgFac-avgEquip,color:P.pink}],big:fmt(util,1)+'%',small:'utilization',unit:'kW'})}});
+ if(I.telco&&I.non)L.push({id:'cD',title:'Load mix',fn:el=>donut(el,{items:[{label:'Telco',val:telV,color:P.pink},{label:'Non-telco',val:nonV,color:P.lime}],big:fmt(telV,0)+' kW',small:fmt(telV/(telV+nonV)*100,0)+'%'})});
+  if(tf)L.push({id:'cUtil',title:'Total Facility Usage',cls:'c2',fn:el=>{let avgFac=st(tfAll,S.stat),util=avgFac?avgFac/4059*100:null;setHR(el,`<span>facility ${fmt(avgFac)} kW · capacity 4059 kW · util ${fmt(util,1)}%</span>`);donut(el,{items:[{label:'Used',val:avgFac,color:P.lime},{label:'Remaining',val:Math.max(0,4059-avgFac),color:P.pink}],big:fmt(util,1)+'%',small:'utilization',unit:'kW'})}});
  draw(L)}
 function renderFuel(){let site=S.site,F=FUEL[site];if(!F){$('kpis').innerHTML='';$('charts').innerHTML='<div class="card"><div class="nd" style="height:90px">No fuel data for this site</div></div>';return}
  const year=S.year?+S.year:latestFuelYear();
