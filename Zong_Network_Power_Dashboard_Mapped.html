@@ -35,15 +35,15 @@ main{width:100%;padding:10px 16px 18px}
 .kpis{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin-bottom:8px}
 .kpi{background:#fff;border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:8px;padding:5px 8px;display:flex;align-items:flex-end;gap:4px;min-width:0;box-shadow:0 1px 3px #3a0f2e10;animation:up .35s both}
 .kpi:nth-child(even){border-left-color:var(--lime)}
-.kl{font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;font-weight:800;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.kv{font-size:18px;font-weight:850;letter-spacing:-.5px;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap}.kv small{font-size:10px;font-weight:700;color:var(--muted);margin-left:2px;letter-spacing:0}
+.kl{font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;font-weight:800;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.kv{font-size:18px;font-weight:850;letter-spacing:-.5px;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:center}.kv small{font-size:10px;font-weight:700;color:var(--muted);margin-left:2px;letter-spacing:0}
 .kpi>div:first-child{min-width:0}
 /* charts */
 .charts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;grid-auto-flow:dense}
 .card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--pink);border-radius:9px;padding:6px 8px 4px;box-shadow:0 1px 3px #3a0f2e10;min-width:0;animation:up .4s both}
 .card.g{border-top-color:var(--lime)}.c2{grid-column:span 1}.card.wide{grid-column:span 2}.card.wide .cb{height:auto}
 .ch{display:flex;justify-content:space-between;align-items:baseline;gap:8px;min-height:17px}
-.ch h3{margin:0;font-size:11px;font-weight:780;white-space:nowrap}
+.ch h3{margin:0;font-size:11px;font-weight:780;white-space:nowrap;text-align:center;width:100%}
 .hr{font-size:10px;color:var(--muted);display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;font-weight:600}
 .hr i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px}
 .hr b{color:var(--ink)}
@@ -61,7 +61,7 @@ main{width:100%;padding:10px 16px 18px}
 .ht{height:8px;background:#f5eef3;border-radius:99px;position:relative;overflow:hidden}
 .ht .rg{position:absolute;top:0;bottom:0;border-radius:99px;opacity:.28}
 .ht .hf{position:absolute;left:0;top:0;bottom:0;border-radius:99px;transform-origin:left;animation:gh .7s cubic-bezier(.2,.8,.2,1) both}
-.hv2{font-weight:800;font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+.hv2{font-weight:800;font-variant-numeric:tabular-nums;min-width:38px;text-align:center}
 .hbs{display:flex;flex-direction:column;justify-content:space-around;height:100%}
 .dn{display:flex;align-items:center;gap:12px;height:100%}.dn svg{flex:none}
 .dn circle{transition:stroke-width .15s}.dn circle:hover{stroke-width:calc(var(--sw) + 5px)}
@@ -390,7 +390,7 @@ function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),
  let tel=I.telco?series(G,gv(I.telco)):[],non=I.non?series(G,gv(I.non)):[],pue=I.pue?series(G,gv(I.pue)):[];
  let telV=st(rows.map(gv(I.telco)),S.stat),nonV=st(rows.map(gv(I.non)),S.stat);
  let gridS=I.src?G.g.map(g=>{let a=g.rows.map(r=>r[I.src]).filter(v=>v!=null&&String(v).trim()!=='');return a.length?a.filter(isGrid).length/a.length*100:null}):[];
- let srcAll=I.src?rows.map(r=>r[I.src]).filter(v=>v!=null&&String(v).trim()!==''):[];
+ let srcAll=I.src?rows.map(r=>r[I.src]).filter(v=>v!=null&&String(v).trim()!==''):[];let gridHrs=0,genHrs=0;if(I.src){let byH={};rows.forEach(r=>{let v=r[I.src];if(v==null||String(v).trim()==='')return;let hr=Math.floor(r._t/3600000);if(!byH[hr])byH[hr]=[];byH[hr].push(v)});Object.values(byH).forEach(vals=>{if(vals.filter(isGrid).length>vals.length/2)gridHrs++;else genHrs++;});}
  let kp=[];
  if(tf)kp.push({l:`Total Facility load · ${SN[S.stat].toLowerCase()}`,v:st(tfAll,S.stat),u:ul(),s:tfv});
  if(tf&&tf.pct)kp.push({l:'Total Facility Load',v:(st(rows.map(gv(tf.pct)),S.stat)??NaN)*100||null,u:'%',s:series(G,gv(tf.pct)),d:1});
@@ -408,9 +408,9 @@ function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),
  if(I.pue)L.push({id:'cC',title:'PUE efficiency',fn:el=>{setHR(el,`<span>avg <b>${fmt(avg(pue),2)}</b></span>`);lineChart(el,{series:[{name:'PUE',color:P.plum,vals:pue}],labels:lab,short:sh,area:true,avgLine:true})}});
  let rk=I.items.filter(it=>it.cat!=='Transformer').map(it=>{let v=rows.map(r=>iv(it,r));return{label:it.name,val:avg(v),min:st(v,'min'),max:st(v,'max'),color:col(it.cat),dot:null}}).filter(x=>x.val!=null).sort((a,b)=>b.val-a.val);
  L.push({id:'cE',title:'Equipment Utilization',cls:'c2',fn:el=>{setHR(el,`<span>avg · light band = peak · <b>${ul()}</b></span>`);el.style.height=Math.max(120,Math.ceil(rk.length/2)*22+10)+'px';hbars(el,rk,{cols:true})}});
- let pr=I.items.filter(i=>i.cat!=='Transformer').map(it=>{var p=it.pct;var vals=p?rows.map(r=>{var key=Object.keys(r).find(k=>norm(k)===norm(p));return key?num(r[key]):null}):[];var v=p?avg(vals):avg(rows.map(r=>iv(it,r)));return{label:it.name,val:isFinite(v)?(p?(v<1?v*100:v):v):NaN,color:col(it.cat)}}).filter(x=>isFinite(x.val)).sort((a,b)=>b.val-a.val);
+ let pr=I.items.filter(i=>i.pct&&i.cat!=='Transformer').map(it=>{var p=it.pct;var vals=rows.map(r=>{var key=Object.keys(r).find(k=>norm(k)===norm(p));return key?num(r[key]):null});var v=avg(vals);return{label:it.name,val:isFinite(v)?(v<1?v*100:v):NaN,color:col(it.cat)}}).filter(x=>isFinite(x.val)).sort((a,b)=>b.val-a.val);
  if(pr.length)L.push({id:'cF',title:'Equipment Load',fn:el=>{setHR(el,'<span>avg load %</span>');el.style.height=Math.max(120,Math.ceil(pr.length/2)*22+10)+'px';hbars(el,pr.map(x=>({...x,color:x.val>80?P.pink:x.color})),{unit:'%',cols:true})}});
- if(srcAll.length)L.push({id:'cJ',title:'Grid vs generator',fn:el=>{let g=srcAll.filter(isGrid).length;donut(el,{items:[{label:'Grid',val:g,color:P.lime},{label:'Generator',val:srcAll.length-g,color:P.pink}],big:fmt(g,0)+'h',small:'on grid',unit:'h'})}});
+ if(srcAll.length)L.push({id:'cJ',title:'Grid vs generator',fn:el=>{donut(el,{items:[{label:'Grid',val:gridHrs,color:P.lime},{label:'Generator',val:genHrs,color:P.pink}],big:fmt(gridHrs,0)+'h',small:'on grid',unit:'h'})}});
  if(tf)L.push({id:'cH',title:'Daily load profile',fn:el=>{let by={};rows.forEach(r=>{let v=iv(tf,r);if(v!=null)(by[r._h]=by[r._h]||[]).push(v)});let keys=Object.keys(by).map(Number).sort((a,b)=>a-b);let it=keys.map(h=>({label:String(h).padStart(2,'0')+':00',short:h+'h',val:avg(by[h]),color:P.lime,hour:h}));let pk=it.reduce((a,b)=>b.val>a.val?b:a,it[0]||{val:0});it.forEach(x=>{if(x===pk)x.color=P.pink});setHR(el,it.length?`<span>peak <b>${pk.label}</b></span>`:'');barChart(el,{items:it,zoom:true});var bs=el.querySelectorAll('.bar');for(var i=0;i<bs.length;i++)bs[i].setAttribute('data-hour',it[i].hour);el.onclick=function(e){var b=e.target.closest('.bar');if(!b)return;var hour=+b.getAttribute('data-hour');if(hour!==hour)return;var eq={};I.items.forEach(function(it){var vs=rows.filter(function(r){return r._h===hour;}).map(function(r){return iv(it,r);}).filter(function(v){return v!=null;});if(vs.length)eq[it.name]=avg(vs);});var names=Object.keys(eq).sort(function(a,b){return eq[b]-eq[a];});var items=names.map(function(n){return '<div style="white-space:nowrap;padding:2px 0"><b>'+esc(n)+'</b>: '+fmt(eq[n])+' '+ul()+'</div>'}).join('');var m=document.createElement('div');m.className='modal-backdrop';m.innerHTML='<div class="modal-panel"><div class="modal-header"><span class="modal-title">Hour <b>'+String(hour).padStart(2,'0')+':00</b> · Equipment breakdown</span><button class="modal-close">&times;</button></div><div style="max-height:56vh;overflow:auto">'+(items?items:'<span style="color:var(--muted)">no equipment data</span>')+'</div></div>';document.body.appendChild(m);m.querySelector('.modal-close').onclick=function(){m.remove();};m.onclick=function(ev){if(ev.target===m)m.remove();};};}});
  if(sel&&sel.length)L.push({id:'cI',title:'Monthly average',fn:el=>{let all=filt(prep(S.site)),by=new Map();all.forEach(r=>{let s=0,n=0;sel.forEach(function(it){var x=iv(it,r);if(x!=null){s+=x;n++;}});if(n){var k=r._y*12+r._m;if(!by.has(k))by.set(k,[]);by.get(k).push(s/n);}});let it=[...by.entries()].sort((a,b)=>a[0]-b[0]).slice(-12).map(([k,a])=>({label:MON[k%12]+' '+Math.floor(k/12),short:MON[k%12],val:avg(a),color:P.pink}));setHR(el,`<span><b>${ul()}</b> · ${esc(S.cat||'all')}</span>`);barChart(el,{items:it,zoom:true})}});
  
@@ -431,7 +431,7 @@ function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),
   dataTable(el,['Room',...heads],body,true);
   const tb=el.querySelector('table');tb.classList.add('temp-table');[...tb.querySelectorAll('tbody td')].forEach(td=>{if(td.textContent==='—')td.classList.add('na')});
 }});
- if(I.telco&&I.non)L.push({id:'cD',title:'Load mix',fn:el=>donut(el,{items:[{label:'Telco',val:telV,color:P.pink},{label:'Non-telco',val:nonV,color:P.lime}],big:fmt(telV/(telV+nonV)*100,0)+'%',small:'telco',unit:'kW'})});
+ if(I.telco&&I.non)L.push({id:'cD',title:'Load mix',fn:el=>donut(el,{items:[{label:'Telco',val:telV,color:P.pink},{label:'Non-telco',val:nonV,color:P.lime}],big:fmt(telV,0)+' kW',small:fmt(nonV,0)+' kW'})});
   if(tf)L.push({id:'cUtil',title:'Facility vs Equipment Load',cls:'c2',fn:el=>{let equipLoad=rows.map(r=>I.items.filter(x=>x.cat!=='Transformer').map(x=>iv(x,r)).filter(v=>v!=null).reduce((a,v)=>a+v,0)).filter((v,j)=>I.items.some(x=>iv(x,rows[j])!=null));let avgFac=st(tfAll,S.stat),avgEquip=avg(equipLoad),util=avgFac?avgEquip/avgFac*100:null;setHR(el,`<span>facility ${fmt(avgFac)} kW · equipment ${fmt(avgEquip)} kW · util ${fmt(util,1)}%</span>`);donut(el,{items:[{label:'Equipment',val:avgEquip,color:P.lime},{label:'Other',val:avgFac-avgEquip,color:P.pink}],big:fmt(util,1)+'%',small:'utilization',unit:'kW'})}});
  draw(L)}
 function renderFuel(){let site=S.site,F=FUEL[site];if(!F){$('kpis').innerHTML='';$('charts').innerHTML='<div class="card"><div class="nd" style="height:90px">No fuel data for this site</div></div>';return}
