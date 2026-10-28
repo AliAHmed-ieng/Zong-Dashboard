@@ -47,9 +47,9 @@ main{width:100%;padding:10px 16px 18px}
 .hr{font-size:10px;color:var(--muted);display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;font-weight:600}
 .hr i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px}
 .hr b{color:var(--ink)}
-.cb{height:96px;position:relative}.cb.t{height:108px}
+.cb{height:96px;position:relative;display:flex;align-items:center;justify-content:center}.cb.t{height:108px}
 .cb svg{display:block;width:100%;height:100%;overflow:visible}
-.ax{fill:#9a8793;font-size:9.5px}.gr{stroke:#f0e6ed;stroke-width:1}
+.ax{fill:#9a8793;font-size:11.5px}.gr{stroke:#f0e6ed;stroke-width:1}
 .ln{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1s ease-out forwards}
 .avl{stroke:#b9a5b2;stroke-dasharray:4 4;stroke-width:1}
 .nd{height:100%;display:grid;place-items:center;color:var(--muted);font-size:11px}
@@ -317,7 +317,7 @@ function lineChart(el,o){let W=el.clientWidth,H=el.clientHeight;if(!W||!H)return
  let n=o.labels.length,pl=40,pr=6,pt=8,pb=17,all=ser.flatMap(s=>s.vals).filter(v=>v!=null),mn=Math.min(...all),mx=Math.max(...all);
  if(o.ref!=null){mn=Math.min(mn,o.ref);mx=Math.max(mx,o.ref)}if(mn===mx){mn-=1;mx+=1}let pad=(mx-mn)*.12;mx+=pad;mn=o.min0?Math.min(0,mn):mn-pad;
  let X=i=>pl+(n===1?(W-pl-pr)/2:i*(W-pl-pr)/(n-1)),Y=v=>H-pb-(v-mn)/(mx-mn)*(H-pt-pb),g='',id='a'+(++UID);
- for(let k=0;k<4;k++){let v=mx-k*(mx-mn)/3,yy=pt+k*(H-pt-pb)/3;g+=`<line class="gr" x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}"/><text class="ax" x="${pl-5}" y="${yy+3}" text-anchor="end">${(o.yf||afs((mx-mn)/3))(v)}</text>`}
+ for(let k=0;k<5;k++){let v=mx-k*(mx-mn)/4,yy=pt+k*(H-pt-pb)/4;g+=`<line class="gr" x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}"/><text class="ax" x="${pl-5}" y="${yy+3}" text-anchor="end">${(o.yf||afs((mx-mn)/4))(v)}</text>`}
  let nl=W<260?3:4,xl='';for(let k=0;k<nl&&n>0;k++){let i=nl===1?0:Math.round(k*(n-1)/(nl-1));xl+=`<text class="ax" x="${X(i)}" y="${H-3}" text-anchor="${k===0?'start':k===nl-1?'end':'middle'}">${esc(o.short[i])}</text>`}
  let defs='',body='';ser.forEach((s,si)=>{let d='',seg=[],segs=[];s.vals.forEach((v,i)=>{if(v==null){if(seg.length)segs.push(seg);seg=[]}else seg.push([X(i),Y(v)])});if(seg.length)segs.push(seg);
   segs.forEach(sg=>{d+=sg.length>1?sg.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(''):`M${sg[0][0]-.5} ${sg[0][1]}L${sg[0][0]+.5} ${sg[0][1]}`});
@@ -416,7 +416,7 @@ function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),
  
  if(I.phases.length===3)L.push({id:'cG',title:'Phase currents',fn:el=>{let ss=I.phases.map((h,i)=>({name:'L'+(i+1),color:[P.pink,P.lime,P.plum][i],vals:series(G,gv(h))}));setHR(el,legend(ss));lineChart(el,{series:ss,labels:lab,short:sh,unit:'A'})}});
  
- if(tf&&tf.pct)L.push({id:'cT',title:'Total Facility Load',fn:el=>{let v=series(G,gv(tf.pct)).map(x=>x==null?null:x*100);setHR(el,'<span>% · limit 80</span>');lineChart(el,{series:[{name:'Load',color:P.amber,vals:v}],labels:lab,short:sh,area:true,ref:80,min0:true,unit:'%',dataLabels:true})}});
+ if(tf&&tf.pct)L.push({id:'cT',title:'Total Facility Load',fn:el=>{let v=series(G,gv(tf.pct)).map(x=>x==null?null:x*100);setHR(el,'<span>% · limit 80</span>');lineChart(el,{series:[{name:'Load',color:P.amber,vals:v}],labels:lab,short:sh,area:true,ref:80,min0:true,unit:'%'})}});
  if(I.temps.length)L.push({id:'cL',title:'Room temperature',cls:'c2',fn:el=>{
   const tv=h=>st(rows.map(r=>{const v=num(r[h]);return v!=null&&v>0&&v<80?v:null}),S.stat);
   const pidx=h=>{const m=String(h).match(/(?:^|[^0-9])(\d+)\s*$/);return m?+m[1]-1:0};
@@ -432,7 +432,7 @@ function renderLoad(){let I=info(S.site),rows=filt(prep(S.site)),G=groups(rows),
   const tb=el.querySelector('table');tb.classList.add('temp-table');[...tb.querySelectorAll('tbody td')].forEach(td=>{if(td.textContent==='—')td.classList.add('na')});
 }});
  if(I.telco&&I.non)L.push({id:'cD',title:'Load mix',fn:el=>donut(el,{items:[{label:'Telco',val:telV,color:P.pink},{label:'Non-telco',val:nonV,color:P.lime}],big:fmt(telV,0)+' kW',small:fmt(nonV,0)+' kW'})});
-  if(tf)L.push({id:'cUtil',title:'Facility vs Equipment Load',cls:'c2',fn:el=>{let equipLoad=rows.map(r=>I.items.filter(x=>x.cat!=='Transformer').map(x=>iv(x,r)).filter(v=>v!=null).reduce((a,v)=>a+v,0)).filter((v,j)=>I.items.some(x=>iv(x,rows[j])!=null));let avgFac=st(tfAll,S.stat),avgEquip=avg(equipLoad),util=avgFac?avgEquip/avgFac*100:null;setHR(el,`<span>facility ${fmt(avgFac)} kW · equipment ${fmt(avgEquip)} kW · util ${fmt(util,1)}%</span>`);donut(el,{items:[{label:'Equipment',val:avgEquip,color:P.lime},{label:'Other',val:avgFac-avgEquip,color:P.pink}],big:fmt(util,1)+'%',small:'utilization',unit:'kW'})}});
+  if(tf)L.push({id:'cUtil',title:'Facility vs Equipment Load',cls:'c2',fn:el=>{let avgFac=st(tfAll,S.stat),avgEquip=avg(equipLoad),util=avgFac?avgEquip/avgFac*100:null;setHR(el,`<span>facility ${fmt(avgFac)} kW · equipment ${fmt(avgEquip)} kW · util ${fmt(util,1)}%</span>`);donut(el,{items:[{label:'Equipment',val:avgEquip,color:P.lime},{label:'Other',val:avgFac-avgEquip,color:P.pink}],big:fmt(util,1)+'%',small:'utilization',unit:'kW'})}});
  draw(L)}
 function renderFuel(){let site=S.site,F=FUEL[site];if(!F){$('kpis').innerHTML='';$('charts').innerHTML='<div class="card"><div class="nd" style="height:90px">No fuel data for this site</div></div>';return}
  const year=S.year?+S.year:latestFuelYear();
