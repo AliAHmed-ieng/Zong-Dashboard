@@ -4,14 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       intake_path:
-        description: Path of the uploaded workbook in the private intake repository
+        description: Path of the base64-encoded workbook in the private intake repository
         required: true
+        default: incoming/latest.xlsx.b64
         type: string
       intake_ref:
         description: Branch or ref in the private intake repository
         required: false
         default: main
         type: string
+  repository_dispatch:
+    types: [korangi_hourly_uploaded]
 
 permissions:
   contents: write
@@ -39,8 +42,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.KORANGI_INTAKE_TOKEN }}
           INTAKE_REPO: ${{ vars.KORANGI_INTAKE_REPO }}
-          INTAKE_PATH: ${{ inputs.intake_path }}
-          INTAKE_REF: ${{ inputs.intake_ref }}
+          INTAKE_PATH: ${{ github.event.client_payload.intake_path || inputs.intake_path || 'incoming/latest.xlsx.b64' }}
+          INTAKE_REF: ${{ github.event.client_payload.intake_ref || inputs.intake_ref || 'main' }}
         run: |
           python - <<'PY'
           import base64, json, os, pathlib, requests
@@ -59,7 +62,9 @@ jobs:
           item = response.json()
           if item.get("type") != "file":
               raise SystemExit("Intake path is not a file")
-          pathlib.Path("incoming.xlsx").write_bytes(base64.b64decode(item["content"]))
+          # Power Automate stores the attachment's base64 text in this private .b64 file.
+          encoded_text = base64.b64decode(item["content"]).decode("ascii").strip()
+          pathlib.Path("incoming.xlsx").write_bytes(base64.b64decode(encoded_text))
           PY
 
       - name: Merge readings into public JSON
