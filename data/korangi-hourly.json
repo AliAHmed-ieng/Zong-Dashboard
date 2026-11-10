@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "location": "Korangi",
+  "sheets": {
+    "Temprature": {
+      "headers": [],
+      "rows": [],
+      "row_count": 0
+    },
+    "Power": {
+      "headers": [],
+      "rows": [],
+      "row_count": 0
+    },
+    "Cooling": {
+      "headers": [],
+      "rows": [],
+      "row_count": 0
+    },
+    "NDC Power": {
+      "headers": [],
+      "rows": [],
+      "row_count": 0
+    },
+    "NDC Cooling": {
+      "headers": [],
+      "rows": [],
+      "row_count": 0
+    }
+  },
+  "last_processed_utc": null
+}
