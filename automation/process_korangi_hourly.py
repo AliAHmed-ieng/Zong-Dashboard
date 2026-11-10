@@ -35,10 +35,14 @@ def unique_headers(ws, header_row: int) -> list[str]:
     headers: list[str] = []
     seen: dict[str, int] = {}
     parent_row = header_row - 1 if header_row > 1 else None
+    active_parent = ""
 
     for col in range(1, ws.max_column + 1):
         child = clean(ws.cell(header_row, col).value)
-        parent = clean(ws.cell(parent_row, col).value) if parent_row else ""
+        raw_parent = clean(ws.cell(parent_row, col).value) if parent_row else ""
+        if raw_parent:
+            active_parent = raw_parent
+        parent = active_parent
         # Use the group label to disambiguate duplicate leaf headings.
         name = child
         if parent and child and parent.lower() not in {"date", "month", "year", "time"}:
@@ -94,12 +98,39 @@ def timestamp_key(row: dict[str, Any]) -> str | None:
     if d in (None, "") or m is None or y in (None, "") or t in (None, ""):
         return None
     try:
-        day = int(float(str(d).strip()))
+        if isinstance(d, (datetime, date)):
+            day = d.day
+            if m is None:
+                m = d.month
+            if y in (None, ""):
+                y = d.year
+        else:
+            raw_date = clean(d)
+            try:
+                day = int(float(raw_date))
+            except ValueError:
+                parsed_date = None
+                for fmt_date in ("%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y", "%d-%b-%Y", "%d %b %Y"):
+                    try:
+                        parsed_date = datetime.strptime(raw_date, fmt_date)
+                        break
+                    except ValueError:
+                        pass
+                if parsed_date is None:
+                    return None
+                day = parsed_date.day
+                if m is None:
+                    m = parsed_date.month
+                if y in (None, ""):
+                    y = parsed_date.year
         year = int(float(str(y).strip()))
         if isinstance(t, time):
             clock = t.strftime("%H:%M:%S")
         elif isinstance(t, datetime):
             clock = t.strftime("%H:%M:%S")
+        elif isinstance(t, (int, float)) and 0 <= float(t) < 1:
+            seconds = round(float(t) * 86400) % 86400
+            clock = f"{seconds // 3600:02d}:{(seconds % 3600) // 60:02d}:{seconds % 60:02d}"
         else:
             raw = clean(t)
             # Excel time may be supplied as "1:00", "01:00 AM", or "13:00".
@@ -186,7 +217,7 @@ def main() -> None:
 
     if not processed:
         raise SystemExit("None of the five expected Korangi worksheets were found.")
-    dataset["last_processed_utc"] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+    dataset["last_processed_utc"] = datetime.now().astimezone().astimezone(__import__("datetime").timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     output_path.write_text(json.dumps(dataset, ensure_ascii=False, separators=(",", ":")),
                            encoding="utf-8")
     print(json.dumps({"processed": processed}, ensure_ascii=False))
