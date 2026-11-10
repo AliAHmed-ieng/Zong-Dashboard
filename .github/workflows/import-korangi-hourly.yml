@@ -1,0 +1,82 @@
+name: Import Korangi hourly report
+
+on:
+  workflow_dispatch:
+    inputs:
+      intake_path:
+        description: Path of the uploaded workbook in the private intake repository
+        required: true
+        type: string
+      intake_ref:
+        description: Branch or ref in the private intake repository
+        required: false
+        default: main
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: korangi-hourly-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out dashboard repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r automation/requirements.txt
+
+      - name: Download workbook from private intake repository
+        env:
+          GH_TOKEN: ${{ secrets.KORANGI_INTAKE_TOKEN }}
+          INTAKE_REPO: ${{ vars.KORANGI_INTAKE_REPO }}
+          INTAKE_PATH: ${{ inputs.intake_path }}
+          INTAKE_REF: ${{ inputs.intake_ref }}
+        run: |
+          python - <<'PY'
+          import base64, json, os, pathlib, requests
+          repo = os.environ["INTAKE_REPO"]
+          path = os.environ["INTAKE_PATH"].lstrip("/")
+          ref = os.environ.get("INTAKE_REF", "main")
+          if not repo or "/" not in repo:
+              raise SystemExit("Set repository variable KORANGI_INTAKE_REPO to owner/private-repo")
+          url = f"https://api.github.com/repos/{repo}/contents/{path}"
+          response = requests.get(url, params={"ref": ref}, headers={
+              "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+              "Accept": "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+          }, timeout=60)
+          response.raise_for_status()
+          item = response.json()
+          if item.get("type") != "file":
+              raise SystemExit("Intake path is not a file")
+          pathlib.Path("incoming.xlsx").write_bytes(base64.b64decode(item["content"]))
+          PY
+
+      - name: Merge readings into public JSON
+        run: python automation/process_korangi_hourly.py incoming.xlsx data/korangi-hourly.json
+
+      - name: Publish updated readings
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/korangi-hourly.json
+          if git diff --cached --quiet; then
+            echo "No new readings to publish."
+          else
+            git commit -m "Update Korangi hourly readings"
+            git push
+          fi
+
+      - name: Remove temporary workbook
+        if: always()
+        run: rm -f incoming.xlsx
